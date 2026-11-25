@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Cost Radar (2026) — LLM API Pricing Calculator & Free-Tier Directory</title>
+<meta name="description" content="Compare real-time Gemini, OpenAI, Claude, DeepSeek, Groq, and Local LLM API pricing per 1M tokens. Estimate monthly AI agent costs and find free-tier APIs instantly." />
+<style>
+  :root { --bg:#080d1a; --card:#11182c; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:'Inter','Segoe UI',sans-serif; background:var(--bg); color:var(--text); line-height:1.55; }
+  .wrap { max-width:1160px; margin:0 auto; padding:32px 20px 72px; }
+  header { display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:26px; }
+  h1 { margin:0; font-size:28px; font-weight:800; }
+  .sub { color:var(--muted); margin:6px 0 0; font-size:14px; }
+  .badge { background:rgba(52,211,153,0.16); color:var(--green); border:1px solid rgba(52,211,153,0.4); padding:5px 12px; border-radius:999px; font-size:12px; font-weight:700; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
+  .calc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
+  label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
+  input, select { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:14px; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
+  th, td { padding:11px 10px; border-bottom:1px solid var(--border); text-align:left; }
+  th { color:var(--muted); font-size:12px; }
+  .pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
+  .p-free { background:rgba(52,211,153,0.16); color:var(--green); }
+  .p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
+  .promo { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; background:linear-gradient(135deg,#17203d,#11182c); border:1px solid var(--accent); }
+  .btn { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13.5px; }
+  .cost-highlight { font-weight:800; color:var(--green); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>⚡ AI Cost Radar — LLM API Pricing & Free-Tier Calculator</h1>
+      <p class="sub">Compare monthly API bills across Gemini, OpenAI, Claude, DeepSeek, Groq & Local LLMs. Updated 2026-11-25.</p>
+    </div>
+    <span class="badge">Free Forever · Updated 2026-11-25</span>
+  </header>
+
+  <section class="card">
+    <h2 style="margin-top:0;font-size:17px">1. Estimate Your Monthly AI API Bill</h2>
+    <div class="calc-grid">
+      <label>Daily Requests / Agent Calls<input id="inCalls" type="number" value="250" min="1" /></label>
+      <label>Avg Input Tokens / Call<input id="inInTok" type="number" value="1500" min="1" /></label>
+      <label>Avg Output Tokens / Call<input id="inOutTok" type="number" value="600" min="1" /></label>
+      <label>Filter<select id="inFilter"><option value="all">All Models</option><option value="free">Free Tier Available Only</option></select></label>
+    </div>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Provider</th><th>Model</th><th>Input / 1M</th><th>Output / 1M</th><th>Free Tier</th><th>Est. Monthly Cost</th><th>Best For</th><th>Link</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card promo">
+    <div>
+      <strong style="font-size:16px">🚀 Running an E-Commerce Store or Solo SaaS? Track Your Real Net Margin Offline.</strong>
+      <div class="sub">Try <strong>SmartMargin Pro</strong> — 1-second CSV profit, fees, VAT & loss SKU analyzer (EN/KR/JA/ES, $12 one-time, no subscription).</div>
+    </div>
+    <a class="btn" href="#smartmargin-pro-checkout" title="Replace with your Gumroad / Lemon Squeezy URL">Get SmartMargin Pro ($12) →</a>
+  </section>
+
+  <section class="card">
+    <h2 style="margin-top:0;font-size:16px">💼 Featured Tool & Sponsor Slot ($29/mo)</h2>
+    <p class="sub">Building an AI API, dev tool, or GPU cloud? Pin your product at the top of AI Cost Radar to reach indie hackers and AI engineers actively budgeting their API spend.</p>
+  </section>
+</div>
+<script>
+const MODELS = [{"provider": "Google", "model": "Gemini 2.5 Flash", "input_1m": 0.15, "output_1m": 0.6, "context": "1M", "free_tier": true, "best_for": "High-volume automation & agents", "url": "https://aistudio.google.com/"}, {"provider": "Google", "model": "Gemini 2.5 Pro", "input_1m": 1.25, "output_1m": 10.0, "context": "1M", "free_tier": true, "best_for": "Complex reasoning & coding", "url": "https://aistudio.google.com/"}, {"provider": "OpenAI", "model": "GPT-4o mini", "input_1m": 0.15, "output_1m": 0.6, "context": "128K", "free_tier": false, "best_for": "Fast low-cost classification & chat", "url": "https://platform.openai.com/"}, {"provider": "OpenAI", "model": "GPT-4o", "input_1m": 2.5, "output_1m": 10.0, "context": "128K", "free_tier": false, "best_for": "Multimodal & general production", "url": "https://platform.openai.com/"}, {"provider": "Anthropic", "model": "Claude 3.5 Haiku", "input_1m": 0.8, "output_1m": 4.0, "context": "200K", "free_tier": false, "best_for": "Low-latency agent workflows", "url": "https://console.anthropic.com/"}, {"provider": "Anthropic", "model": "Claude 3.7 Sonnet", "input_1m": 3.0, "output_1m": 15.0, "context": "200K", "free_tier": false, "best_for": "Software engineering & analysis", "url": "https://console.anthropic.com/"}, {"provider": "DeepSeek", "model": "DeepSeek-V3", "input_1m": 0.27, "output_1m": 1.1, "context": "64K", "free_tier": false, "best_for": "Ultra-low-cost coding & reasoning", "url": "https://platform.deepseek.com/"}, {"provider": "Groq", "model": "Llama 3.3 70B (Groq)", "input_1m": 0.59, "output_1m": 0.79, "context": "128K", "free_tier": true, "best_for": "Ultra-fast inference & free dev tier", "url": "https://console.groq.com/"}, {"provider": "Ollama (Local)", "model": "Qwen 2.5 / Llama 3.3 Local", "input_1m": 0.0, "output_1m": 0.0, "context": "32K+", "free_tier": true, "best_for": "$0 offline privacy & zero API bill", "url": "https://ollama.com/"}];
+function render() {
+  const calls = Math.max(1, Number(document.getElementById('inCalls').value || 1));
+  const inTok = Math.max(1, Number(document.getElementById('inInTok').value || 1));
+  const outTok = Math.max(1, Number(document.getElementById('inOutTok').value || 1));
+  const flt = document.getElementById('inFilter').value;
+  const monthlyInM = (calls * 30 * inTok) / 1e6;
+  const monthlyOutM = (calls * 30 * outTok) / 1e6;
+
+  const list = MODELS
+    .filter(m => flt === 'all' || m.free_tier)
+    .map(m => ({ ...m, monthly: monthlyInM * m.input_1m + monthlyOutM * m.output_1m }))
+    .sort((a, b) => a.monthly - b.monthly);
+
+  document.getElementById('tbody').innerHTML = list.map(m => `
+    <tr>
+      <td><strong>${m.provider}</strong></td>
+      <td>${m.model}</td>
+      <td>$${m.input_1m.toFixed(2)}</td>
+      <td>$${m.output_1m.toFixed(2)}</td>
+      <td><span class="pill ${m.free_tier ? 'p-free' : 'p-paid'}">${m.free_tier ? 'FREE TIER' : 'PAID'}</span></td>
+      <td class="cost-highlight">$${m.monthly.toFixed(2)} / mo</td>
+      <td style="color:#94a3b8">${m.best_for}</td>
+      <td><a href="${m.url}" target="_blank" rel="noopener" style="color:#818cf8">Docs ↗</a></td>
+    </tr>`).join('');
+}
+['inCalls','inInTok','inOutTok','inFilter'].forEach(id => document.getElementById(id).addEventListener('input', render));
+render();
+</script>
+</body>
+</html>
