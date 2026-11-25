@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SmartMargin Pro — Global Multi-Channel Profit, Fee & Tax Analyzer</title>
+<style>
+  :root {
+    --bg: #090e1a; --card: #121a2d; --card2: #18223a; --border: #253457;
+    --text: #f1f5f9; --muted: #94a3b8; --primary: #6366f1; --primary2: #818cf8;
+    --green: #34d399; --cyan: #38bdf8; --amber: #fbbf24; --red: #f87171;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Inter', 'Pretendard', 'Segoe UI', 'Malgun Gothic', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+  .wrap { max-width: 1380px; margin: 0 auto; padding: 24px 22px 60px; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+  .brand h1 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.4px; }
+  .brand p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .btn { border: none; border-radius: 9px; padding: 9px 13px; font-weight: 600; cursor: pointer; font-size: 12.5px; transition: .15s; }
+  .btn-primary { background: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary2); }
+  .btn-ghost { background: var(--card2); color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--primary); }
+  .btn-green { background: rgba(52,211,153,0.18); color: #a7f3d0; border: 1px solid rgba(52,211,153,0.45); }
+  .btn-danger { background: rgba(248,113,113,0.16); color: #fecaca; border: 1px solid rgba(248,113,113,0.45); }
+  .btn-sm { padding: 6px 10px; font-size: 12px; }
+
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; }
+  .dropzone { flex: 1; min-width: 240px; border: 1.5px dashed var(--primary); border-radius: 10px; padding: 12px 14px; text-align: center; cursor: pointer; background: rgba(99,102,241,0.08); transition: .15s; }
+  .dropzone.drag { background: rgba(99,102,241,0.22); }
+  .toolbar label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); }
+  select, input { background: #0b1122; color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font-size: 12.5px; }
+
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 12px; margin-bottom: 18px; }
+  .kpi { background: linear-gradient(155deg, var(--card), #0d1527); border: 1px solid var(--border); border-radius: 14px; padding: 15px 16px; }
+  .kpi-label { font-size: 12px; color: var(--muted); }
+  .kpi-val { font-size: 22px; font-weight: 800; margin: 6px 0 3px; }
+  .kpi-sub { font-size: 11.5px; color: var(--muted); }
+  .c-green { color: var(--green); } .c-cyan { color: var(--cyan); } .c-amber { color: var(--amber); } .c-red { color: var(--red); }
+
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px; margin-bottom: 18px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+  .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+  .card-head h2 { margin: 0; font-size: 15.5px; }
+
+  .table-wrap { overflow-x: auto; max-height: 390px; overflow-y: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { padding: 8px 9px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+  th { background: #0d1426; color: var(--muted); position: sticky; top: 0; }
+  .pill { padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+  .p-ok { background: rgba(52,211,153,0.16); color: var(--green); }
+  .p-warn { background: rgba(251,191,36,0.18); color: var(--amber); }
+  .p-bad { background: rgba(248,113,113,0.2); color: var(--red); }
+
+  .add-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .alert-box { background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.4); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-size: 13px; color: #fecaca; }
+  .hidden { display: none !important; }
+  .privacy-note { font-size: 12px; color: var(--green); }
+
+  @media print {
+    body { background: #fff; color: #111; }
+    .no-print { display: none !important; }
+    .card, .kpi { background: #fff !important; border: 1px solid #cbd5e1 !important; color: #111 !important; }
+    th { background: #f1f5f9 !important; color: #111 !important; }
+    .kpi-label, .kpi-sub { color: #475569 !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1 id="tTitle">SmartMargin Pro — Global Multi-Channel Profit & Tax Analyzer</h1>
+      <p id="tSub">Shopify · Amazon · Etsy · SmartStore · Coupang CSV Settlement & Net Margin Dashboard <span class="privacy-note" id="tPriv">🔒 100% Offline Local Privacy</span></p>
+    </div>
+    <div class="actions no-print">
+      <select id="langSel" title="Language">
+        <option value="en">🌐 English (Default)</option>
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="es">🇪🇸 Español</option>
+      </select>
+      <select id="currSel" title="Currency">
+        <option value="USD">USD ($)</option>
+        <option value="EUR">EUR (€)</option>
+        <option value="GBP">GBP (£)</option>
+        <option value="KRW">KRW (₩)</option>
+        <option value="JPY">JPY (¥)</option>
+      </select>
+      <button class="btn btn-ghost btn-sm" id="btnLoadSample">📦 Load Sample</button>
+      <button class="btn btn-green btn-sm" id="btnExportCSV">⬇ Export CSV</button>
+      <button class="btn btn-primary btn-sm" id="btnPrint">🖨️ Print / PDF P&L</button>
+    </div>
+  </header>
+
+  <div class="toolbar no-print">
+    <div class="dropzone" id="dropzone">
+      <span id="tDrop">📂 <strong>Drag & drop your CSV file here or click to upload</strong> (Auto-detects UTF-8 / EUC-KR / Shift-JIS)</span>
+      <input type="file" id="fileInput" accept=".csv,.tsv,.txt" class="hidden" />
+    </div>
+    <label><span id="tTaxLbl">Tax Preset</span>
+      <select id="taxType">
+        <option value="0.0">Tax-Exempt / 0%</option>
+        <option value="0.08">US Avg Sales Tax (8%)</option>
+        <option value="0.10" selected>Standard VAT / GST (10%)</option>
+        <option value="0.20">EU / UK VAT (20%)</option>
+        <option value="0.015">KR Simplified Tax (1.5%)</option>
+      </select>
+    </label>
+    <label><span id="tChLbl">Channel</span>
+      <select id="channelFilter"><option value="ALL">All Channels</option></select>
+    </label>
+    <button class="btn btn-danger btn-sm" id="btnClear">Reset</button>
+  </div>
+
+  <div id="lossAlert" class="alert-box hidden"></div>
+
+  <section class="kpis">
+    <div class="kpi"><div class="kpi-label" id="lGross">Gross Revenue</div><div class="kpi-val" id="kGross">$0</div><div class="kpi-sub" id="kOrders">0 orders · 0 units</div></div>
+    <div class="kpi"><div class="kpi-label" id="lNet">Net Profit</div><div class="kpi-val c-green" id="kNet">$0</div><div class="kpi-sub" id="kMargin">Net Margin 0.0%</div></div>
+    <div class="kpi"><div class="kpi-label" id="lFees">Platform Fees + Shipping</div><div class="kpi-val c-amber" id="kFees">$0</div><div class="kpi-sub" id="kFeeRatio">0.0% of sales</div></div>
+    <div class="kpi"><div class="kpi-label" id="lCogs">COGS + Ad Spend</div><div class="kpi-val" id="kCogs">$0</div><div class="kpi-sub" id="kRoas">Ad ROAS 0%</div></div>
+    <div class="kpi"><div class="kpi-label" id="lVat">Estimated VAT / Tax</div><div class="kpi-val c-cyan" id="kVat">$0</div><div class="kpi-sub" id="kTaxLabel">10.0% applied</div></div>
+    <div class="kpi"><div class="kpi-label" id="lRefund">Refund / Return Loss</div><div class="kpi-val c-red" id="kRefund">$0</div><div class="kpi-sub" id="kRefundCnt">0 refunds</div></div>
+  </section>
+
+  <section class="grid-2">
+    <div class="card">
+      <div class="card-head"><h2 id="hChChart">Revenue & Net Profit by Channel</h2><span class="kpi-sub" id="sRealtime">Real-time aggregation</span></div>
+      <div id="channelChart"></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2 id="hSkuRank">SKU Margin Ranking & Loss Alerts</h2><span class="kpi-sub" id="sSkuWarn">Flags SKU &lt; 10% margin</span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th id="thProd">Product</th><th id="thQty">Qty</th><th id="thSales">Sales</th><th id="thNet">Net Profit</th><th id="thMargin">Margin</th><th id="thStat">Status</th></tr></thead>
+          <tbody id="skuTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2 id="hLedger">Order & Settlement Ledger</h2>
+      <span class="kpi-sub" id="sLocalSave">Auto-saved locally in your browser</span>
+    </div>
+    <form id="addForm" class="add-form no-print">
+      <input name="date" type="date" required />
+      <input name="channel" id="inCh" placeholder="Channel (e.g. Shopify)" required />
+      <input name="product" id="inProd" placeholder="Product / SKU" required />
+      <input name="qty" type="number" min="1" value="1" placeholder="Qty" required />
+      <input name="price" type="number" step="0.01" min="0" placeholder="Unit Price" required />
+      <input name="cost" type="number" step="0.01" min="0" placeholder="Unit Cost" required />
+      <input name="fee_pct" type="number" step="0.1" value="5.0" placeholder="Fee (%)" />
+      <input name="shipping" type="number" step="0.01" value="4.5" placeholder="Shipping" />
+      <input name="ad_cost" type="number" step="0.01" value="0" placeholder="Ad Spend" />
+      <button type="submit" class="btn btn-primary btn-sm" id="btnAdd">+ Add Entry</button>
+    </form>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Channel</th><th>Product</th><th>Qty</th><th>Sales</th><th>COGS</th><th>Fees</th><th>Ship/Ads</th><th>Net Profit</th><th>Margin</th><th class="no-print">Del</th></tr></thead>
+        <tbody id="rowsTbody"></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+const I18N = {
+  en: {
+    title: "SmartMargin Pro — Global Multi-Channel Profit & Tax Analyzer",
+    sub: "Shopify · Amazon · Etsy · SmartStore · Coupang CSV Settlement & Net Margin Dashboard",
+    priv: "🔒 100% Offline Local Privacy",
+    sample: "📦 Load Sample", export: "⬇ Export CSV", print: "🖨️ Print / PDF P&L",
+    drop: "📂 <strong>Drag & drop your CSV file here or click to upload</strong> (UTF-8 / EUC-KR / Shift-JIS)",
+    taxLbl: "Tax Preset", chLbl: "Channel", allCh: "All Channels", clear: "Reset",
+    lGross: "Gross Revenue", lNet: "Net Profit", lFees: "Platform Fees + Shipping",
+    lCogs: "COGS + Ad Spend", lVat: "Estimated VAT / Tax", lRefund: "Refund / Return Loss",
+    hChChart: "Revenue & Net Profit by Channel", hSkuRank: "SKU Margin Ranking & Loss Alerts",
+    hLedger: "Order & Settlement Ledger", sRealtime: "Real-time aggregation",
+    sSkuWarn: "Flags SKU < 10% margin", sLocalSave: "Auto-saved locally in your browser",
+    btnAdd: "+ Add Entry", ok: "Healthy", warn: "Low Margin", bad: "Loss",
+    alertPrefix: "⚠️ Low-Margin / Loss SKU Alert",
+  },
+  ko: {
+    title: "SmartMargin Pro — 글로벌·국내 멀티마켓 매출·정산·마진 자동 분석기",
+    sub: "스마트스토어 · 쿠팡 · 쇼피파이 · 아마존 · 엣시 CSV 정산 통합 분석 대시보드",
+    priv: "🔒 100% 오프라인 로컬 보안 (외부 전송 없음)",
+    sample: "📦 샘플 불러오기", export: "⬇ 엑셀(CSV) 저장", print: "🖨️ 손익계산서 인쇄/PDF",
+    drop: "📂 <strong>CSV 파일을 드래그하거나 클릭하여 업로드</strong> (UTF-8 / 한글 EUC-KR 자동 인식)",
+    taxLbl: "과세율", chLbl: "채널", allCh: "전체 채널", clear: "초기화",
+    lGross: "총 매출액", lNet: "순이익 (Net Profit)", lFees: "플랫폼 수수료 + 배송비",
+    lCogs: "매입원가 + 광고비", lVat: "예상 부가세 (VAT)", lRefund: "반품/환불 손실액",
+    hChChart: "채널별 매출 · 순이익 비교", hSkuRank: "상품(SKU)별 마진 랭킹 & 적자 경보",
+    hLedger: "주문·정산 원장", sRealtime: "실시간 자동 집계",
+    sSkuWarn: "마진 10% 미만 자동 경고", sLocalSave: "브라우저 로컬 저장소에 자동 보존",
+    btnAdd: "+ 건별 추가", ok: "양호", warn: "저마진", bad: "적자",
+    alertPrefix: "⚠️ 저마진/적자 상품 경보",
+  },
+  ja: {
+    title: "SmartMargin Pro — マルチチャネル売上・利益・税金アナライザー",
+    sub: "Shopify · Amazon · 楽天 · Etsy CSV決済・純利益ダッシュボード",
+    priv: "🔒 100%オフライン・ローカル処理",
+    sample: "📦 サンプル読込", export: "⬇ CSV出力", print: "🖨️ 損益レポート印刷/PDF",
+    drop: "📂 <strong>CSVファイルをドラッグ＆ドロップまたはクリック</strong>",
+    taxLbl: "税率設定", chLbl: "チャネル", allCh: "全チャネル", clear: "リセット",
+    lGross: "総売上", lNet: "純利益", lFees: "手数料 + 送料",
+    lCogs: "原価 + 広告費", lVat: "推定消費税", lRefund: "返品・返金損失",
+    hChChart: "チャネル別 売上・純利益", hSkuRank: "SKU別利益率ランキング＆赤字警告",
+    hLedger: "注文・決済台帳", sRealtime: "リアルタイム集計",
+    sSkuWarn: "利益率10%未満を自動警告", sLocalSave: "ブラウザにローカル自動保存",
+    btnAdd: "+ 追加", ok: "良好", warn: "低利益", bad: "赤字",
+    alertPrefix: "⚠️ 低利益・赤字SKU警告",
+  },
+  es: {
+    title: "SmartMargin Pro — Analizador Global de Ventas, Margen Neto e Impuestos",
+    sub: "Shopify · Amazon · Etsy · MercadoLibre — Panel de Rentabilidad CSV",
+    priv: "🔒 100% Privado y Sin Conexión",
+    sample: "📦 Cargar Ejemplo", export: "⬇ Exportar CSV", print: "🖨️ Imprimir / PDF P&L",
+    drop: "📂 <strong>Arrastra tu archivo CSV aquí o haz clic para subir</strong>",
+    taxLbl: "Impuesto/IVA", chLbl: "Canal", allCh: "Todos los canales", clear: "Reiniciar",
+    lGross: "Ingresos Brutos", lNet: "Beneficio Neto", lFees: "Comisiones + Envío",
+    lCogs: "Costo + Publicidad", lVat: "IVA / Impuesto Est.", lRefund: "Pérdida Devoluciones",
+    hChChart: "Ingresos y Beneficio por Canal", hSkuRank: "Ranking de Margen por SKU",
+    hLedger: "Registro de Pedidos y Liquidaciones", sRealtime: "Cálculo en tiempo real",
+    sSkuWarn: "Alerta si margen < 10%", sLocalSave: "Guardado automático local",
+    btnAdd: "+ Añadir", ok: "Saludable", warn: "Margen Bajo", bad: "Pérdida",
+    alertPrefix: "⚠️ Alerta de SKU con Margen Bajo / Pérdida",
+  }
+};
+
+const CURR_SYM = { USD: "$", EUR: "€", GBP: "£", KRW: "₩", JPY: "¥" };
+const STORAGE_KEY = "smartmargin_pro_global_v11_rows";
+
+const SAMPLE_GLOBAL = [
+  { date: "2026-11-01", channel: "Shopify", product: "Minimalist Desk Mat Pro (L)", qty: 18, price: 39.0, cost: 11.5, fee_pct: 2.9, shipping: 54.0, ad_cost: 85.0, refunded: false },
+  { date: "2026-11-02", channel: "Amazon", product: "Minimalist Desk Mat Pro (L)", qty: 26, price: 38.0, cost: 11.5, fee_pct: 15.0, shipping: 91.0, ad_cost: 120.0, refunded: false },
+  { date: "2026-11-03", channel: "Etsy", product: "Walnut Ergonomic Laptop Stand", qty: 11, price: 64.0, cost: 22.0, fee_pct: 9.5, shipping: 44.0, ad_cost: 35.0, refunded: false },
+  { date: "2026-11-04", channel: "Amazon", product: "USB-C Aluminum Travel Hub", qty: 20, price: 24.0, cost: 13.5, fee_pct: 15.0, shipping: 60.0, ad_cost: 95.0, refunded: false },
+  { date: "2026-11-05", channel: "Amazon", product: "USB-C Aluminum Travel Hub", qty: 2, price: 24.0, cost: 13.5, fee_pct: 15.0, shipping: 12.0, ad_cost: 0.0, refunded: true },
+  { date: "2026-11-07", channel: "Shopify", product: "Walnut Ergonomic Laptop Stand", qty: 15, price: 68.0, cost: 22.0, fee_pct: 2.9, shipping: 52.0, ad_cost: 65.0, refunded: false },
+];
+
+let lang = "en";
+let curr = "USD";
+let rows = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const fmt = (n) => {
+  const sym = CURR_SYM[curr] || "$";
+  const decimals = (curr === "KRW" || curr === "JPY") ? 0 : 2;
+  const val = Number(n || 0);
+  const sign = val < 0 ? "-" : "";
+  return sign + sym + Math.abs(val).toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+};
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(rows)); }
+
+function applyLang() {
+  const t = I18N[lang] || I18N.en;
+  document.getElementById("tTitle").textContent = t.title;
+  document.getElementById("tSub").innerHTML = `${t.sub} <span class="privacy-note" id="tPriv">${t.priv}</span>`;
+  document.getElementById("btnLoadSample").textContent = t.sample;
+  document.getElementById("btnExportCSV").textContent = t.export;
+  document.getElementById("btnPrint").textContent = t.print;
+  document.getElementById("tDrop").innerHTML = t.drop;
+  document.getElementById("tTaxLbl").textContent = t.taxLbl;
+  document.getElementById("tChLbl").textContent = t.chLbl;
+  document.getElementById("btnClear").textContent = t.clear;
+  ["lGross","lNet","lFees","lCogs","lVat","lRefund","hChChart","hSkuRank","hLedger","sRealtime","sSkuWarn","sLocalSave","btnAdd"].forEach(id => {
+    document.getElementById(id).textContent = t[id];
+  });
+}
+
+function calcRow(r, vatR) {
+  const gross = r.refunded ? 0 : r.qty * r.price;
+  const cogs = r.refunded ? 0 : r.qty * r.cost;
+  const fee = gross * (Number(r.fee_pct || 0) / 100);
+  const ship = Number(r.shipping || 0);
+  const ad = Number(r.ad_cost || 0);
+  const vat = r.refunded ? 0 : Math.max(0, (gross - cogs) * vatR);
+  const net = r.refunded ? -(ship + ad) : (gross - cogs - fee - ship - ad - vat);
+  const margin = gross > 0 ? (net / gross) * 100 : (r.refunded ? -100 : 0);
+  return { gross, cogs, fee, ship, ad, vat, net, margin };
+}
+
+function render() {
+  applyLang();
+  const t = I18N[lang] || I18N.en;
+  const vatR = Number(document.getElementById("taxType").value || 0);
+  const chSel = document.getElementById("channelFilter");
+  const prevCh = chSel.value || "ALL";
+  const channels = [...new Set(rows.map(r => r.channel))];
+  chSel.innerHTML = `<option value="ALL">${t.allCh}</option>` +
+    channels.map(c => `<option value="${esc(c)}" ${c === prevCh ? "selected" : ""}>${esc(c)}</option>`).join("");
+
+  const filtered = chSel.value === "ALL" ? rows : rows.filter(r => r.channel === chSel.value);
+  let tGross = 0, tNet = 0, tFee = 0, tShip = 0, tCogs = 0, tAd = 0, tVat = 0, tRef = 0, refCnt = 0, tQty = 0;
+  const chMap = {}, skuMap = {};
+
+  filtered.forEach(r => {
+    const c = calcRow(r, vatR);
+    tGross += c.gross; tNet += c.net; tFee += c.fee; tShip += c.ship;
+    tCogs += c.cogs; tAd += c.ad; tVat += c.vat;
+    if (r.refunded) { tRef += (r.qty * r.price) + c.ship; refCnt++; } else { tQty += Number(r.qty); }
+    chMap[r.channel] = chMap[r.channel] || { gross: 0, net: 0 };
+    chMap[r.channel].gross += c.gross; chMap[r.channel].net += c.net;
+    skuMap[r.product] = skuMap[r.product] || { qty: 0, gross: 0, net: 0 };
+    skuMap[r.product].qty += r.refunded ? 0 : Number(r.qty);
+    skuMap[r.product].gross += c.gross; skuMap[r.product].net += c.net;
+  });
+
+  document.getElementById("kGross").textContent = fmt(tGross);
+  document.getElementById("kOrders").textContent = `${filtered.length} orders · ${tQty} units`;
+  document.getElementById("kNet").textContent = fmt(tNet);
+  document.getElementById("kNet").className = "kpi-val " + (tNet >= 0 ? "c-green" : "c-red");
+  document.getElementById("kMargin").textContent = `Margin ${tGross > 0 ? (tNet / tGross * 100).toFixed(1) : "0.0"}%`;
+  document.getElementById("kFees").textContent = fmt(tFee + tShip);
+  document.getElementById("kFeeRatio").textContent = `${tGross > 0 ? ((tFee + tShip) / tGross * 100).toFixed(1) : "0.0"}% of sales`;
+  document.getElementById("kCogs").textContent = fmt(tCogs + tAd);
+  document.getElementById("kRoas").textContent = `ROAS ${tAd > 0 ? Math.round(tGross / tAd * 100) : 0}%`;
+  document.getElementById("kVat").textContent = fmt(tVat);
+  document.getElementById("kTaxLabel").textContent = `${(vatR * 100).toFixed(1)}% rate`;
+  document.getElementById("kRefund").textContent = fmt(tRef);
+  document.getElementById("kRefundCnt").textContent = `${refCnt} refunds`;
+
+  const chEntries = Object.entries(chMap);
+  const maxCh = Math.max(...chEntries.map(([,v]) => v.gross), 1);
+  document.getElementById("channelChart").innerHTML = chEntries.map(([name, v]) => {
+    const gw = Math.max(4, (v.gross / maxCh) * 100);
+    const nw = Math.max(2, (Math.max(0, v.net) / maxCh) * 100);
+    return `<div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px">
+        <strong>${esc(name)}</strong><span>${fmt(v.gross)} · <strong class="${v.net>=0?'c-green':'c-red'}">${fmt(v.net)}</strong></span>
+      </div>
+      <div style="height:10px;background:#0b1122;border-radius:6px;overflow:hidden;margin-bottom:3px"><div style="width:${gw}%;height:100%;background:#6366f1"></div></div>
+      <div style="height:8px;background:#0b1122;border-radius:6px;overflow:hidden"><div style="width:${nw}%;height:100%;background:#34d399"></div></div>
+    </div>`;
+  }).join("") || `<div class="kpi-sub">No data loaded.</div>`;
+
+  const skuEntries = Object.entries(skuMap).sort((a, b) => b[1].net - a[1].net);
+  const badSkus = [];
+  document.getElementById("skuTbody").innerHTML = skuEntries.map(([name, v]) => {
+    const m = v.gross > 0 ? (v.net / v.gross * 100) : 0;
+    if (m < 10) badSkus.push(`${name} (${m.toFixed(1)}%)`);
+    const pill = m < 0 ? `<span class="pill p-bad">${t.bad}</span>` : (m < 10 ? `<span class="pill p-warn">${t.warn}</span>` : `<span class="pill p-ok">${t.ok}</span>`);
+    return `<tr><td>${esc(name)}</td><td>${v.qty}</td><td>${fmt(v.gross)}</td><td class="${v.net>=0?'c-green':'c-red'}">${fmt(v.net)}</td><td>${m.toFixed(1)}%</td><td>${pill}</td></tr>`;
+  }).join("");
+
+  const alertEl = document.getElementById("lossAlert");
+  if (badSkus.length) {
+    alertEl.textContent = `${t.alertPrefix} (${badSkus.length}): ${badSkus.join(", ")}`;
+    alertEl.classList.remove("hidden");
+  } else { alertEl.classList.add("hidden"); }
+
+  document.getElementById("rowsTbody").innerHTML = filtered.map((r) => {
+    const c = calcRow(r, vatR);
+    return `<tr>
+      <td>${esc(r.date)}</td><td>${esc(r.channel)}</td><td>${esc(r.product)}${r.refunded ? ' <span class="pill p-bad">REFUND</span>' : ''}</td>
+      <td>${r.qty}</td><td>${fmt(c.gross)}</td><td>${fmt(c.cogs)}</td><td>${fmt(c.fee)}</td><td>${fmt(c.ship + c.ad)}</td>
+      <td class="${c.net>=0?'c-green':'c-red'}"><strong>${fmt(c.net)}</strong></td><td>${c.margin.toFixed(1)}%</td>
+      <td class="no-print"><button class="btn btn-danger btn-sm" onclick="delRow(${rows.indexOf(r)})">×</button></td>
+    </tr>`;
+  }).join("");
+}
+
+window.delRow = (idx) => { rows.splice(idx, 1); save(); render(); };
+
+function parseCSVText(text) {
+  const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const delim = lines[0].includes("\t") ? "\t" : ",";
+  const headers = lines[0].split(delim).map(h => h.trim().toLowerCase());
+  const findIdx = (keys, def) => { for (const k of keys) { const i = headers.findIndex(h => h.includes(k)); if (i >= 0) return i; } return def; };
+  const iDate = findIdx(["date","날짜","fecha","日付"], 0);
+  const iCh = findIdx(["channel","platform","채널","canal","チャネル"], 1);
+  const iProd = findIdx(["product","sku","item","상품","producto","商品"], 2);
+  const iQty = findIdx(["qty","quantity","수량","cantidad","数量"], 3);
+  const iPrice = findIdx(["price","단가","판매가","precio","単価"], 4);
+  const iCost = findIdx(["cost","cogs","원가","costo","原価"], 5);
+  const iFee = findIdx(["fee","수수료","comision","手数料"], 6);
+  const iShip = findIdx(["ship","배송","envio","送料"], 7);
+  const iAd = findIdx(["ad","광고","publicidad","広告"], 8);
+  const iRef = findIdx(["refund","return","반품","환불","devolucion","返品"], 9);
+
+  const parsed = [];
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split(delim).map(c => c.trim().replace(/^"|"$/g, ""));
+    if (cols.length < 4) continue;
+    const num = (v, d=0) => { const n = Number(String(v||"").replace(/[,$€£¥₩원%]/g, "")); return isNaN(n) ? d : n; };
+    parsed.push({
+      date: cols[iDate] || new Date().toISOString().slice(0, 10),
+      channel: cols[iCh] || "Other",
+      product: cols[iProd] || "Untitled SKU",
+      qty: Math.max(1, num(cols[iQty], 1)),
+      price: num(cols[iPrice], 0),
+      cost: num(cols[iCost], 0),
+      fee_pct: num(cols[iFee], 5.0),
+      shipping: num(cols[iShip], 0),
+      ad_cost: num(cols[iAd], 0),
+      refunded: ["y","yes","true","1","반품","환불","refund","si"].includes(String(cols[iRef] || "").toLowerCase()),
+    });
+  }
+  return parsed;
+}
+
+function handleFile(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const buf = e.target.result;
+    let text = new TextDecoder("utf-8").decode(buf);
+    if (text.includes("")) { try { text = new TextDecoder("euc-kr").decode(buf); } catch (_) {} }
+    const items = parseCSVText(text);
+    if (!items.length) { alert("No valid CSV rows detected."); return; }
+    rows = rows.concat(items); save(); render();
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+const dz = document.getElementById("dropzone"), fi = document.getElementById("fileInput");
+dz.onclick = () => fi.click();
+fi.onchange = (e) => { if (e.target.files[0]) handleFile(e.target.files[0]); fi.value = ""; };
+dz.ondragover = (e) => { e.preventDefault(); dz.classList.add("drag"); };
+dz.ondragleave = () => dz.classList.remove("drag");
+dz.ondrop = (e) => { e.preventDefault(); dz.classList.remove("drag"); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); };
+
+document.getElementById("langSel").onchange = (e) => { lang = e.target.value; render(); };
+document.getElementById("currSel").onchange = (e) => { curr = e.target.value; render(); };
+document.getElementById("btnLoadSample").onclick = () => { rows = [...SAMPLE_GLOBAL]; save(); render(); };
+document.getElementById("btnClear").onclick = () => { if (confirm("Clear all ledger entries?")) { rows = []; save(); render(); } };
+document.getElementById("taxType").onchange = render;
+document.getElementById("channelFilter").onchange = render;
+document.getElementById("btnPrint").onclick = () => window.print();
+document.getElementById("btnExportCSV").onclick = () => {
+  const vatR = Number(document.getElementById("taxType").value || 0);
+  const header = ["Date","Channel","Product","Qty","Gross","COGS","Fees","Shipping","AdSpend","Tax","NetProfit","MarginPct"];
+  const lines = [header.join(",")];
+  rows.forEach(r => {
+    const c = calcRow(r, vatR);
+    lines.push([r.date, r.channel, `"${r.product}"`, r.qty, c.gross.toFixed(2), c.cogs.toFixed(2), c.fee.toFixed(2), c.ship.toFixed(2), c.ad.toFixed(2), c.vat.toFixed(2), c.net.toFixed(2), c.margin.toFixed(1)].join(","));
+  });
+  const blob = new Blob(["\uFEFF" + lines.join("\n")], { type: "text/csv;charset=utf-8;" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `SmartMargin_Pro_Report_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+};
+document.getElementById("addForm").onsubmit = (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  rows.push({
+    date: fd.get("date"), channel: fd.get("channel"), product: fd.get("product"),
+    qty: Number(fd.get("qty")), price: Number(fd.get("price")), cost: Number(fd.get("cost")),
+    fee_pct: Number(fd.get("fee_pct") || 0), shipping: Number(fd.get("shipping") || 0),
+    ad_cost: Number(fd.get("ad_cost") || 0), refunded: false,
+  });
+  save(); render(); e.target.reset();
+};
+
+if (!rows.length) { rows = [...SAMPLE_GLOBAL]; save(); }
+render();
+</script>
+</body>
+</html>
