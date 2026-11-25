@@ -193,6 +193,62 @@ render();
     ja: { brand:'AI コストレーダー', 'index.html':'AI API料金', 'token-counter.html':'トークン計算', 'smartmargin.html':'利益率分析', 'json-tools.html':'JSON整形', 'regex-tester.html':'正規表現', 'word-counter.html':'文字数・SEO', 'freelance-calc.html':'フリーランス単価', 'image-compress.html':'画像圧縮', 'password-gen.html':'パスワード生成', 'guide-ai-cost-optimization.html':'節約ガイド', foot:'100%クライアント処理・無料オンラインツール' },
     es: { brand:'AI Cost Radar', 'index.html':'Costos API IA', 'token-counter.html':'Tokens IA', 'smartmargin.html':'Margen Neto', 'json-tools.html':'JSON & Esquema', 'regex-tester.html':'Regex', 'word-counter.html':'Palabras SEO', 'freelance-calc.html':'Tarifa Freelance', 'image-compress.html':'Comprimir Img', 'password-gen.html':'Claves Seguras', 'guide-ai-cost-optimization.html':'Guía Ahorro', foot:'Herramientas Gratuitas 100% Locales · Privacidad Total' }
   };
+  const PAGE_I18N = {
+    'index.html': {
+      ko: { h1:'⚡ AI 코스트 레이더 — LLM API 가격 계산기 & 무료 티어 디렉토리 (2026)', sub:'Google Gemini, OpenAI, Anthropic Claude, DeepSeek, Groq 및 로컬 Ollama 모델의 월간 API 예상 비용을 실시간으로 비교하세요.' },
+      ja: { h1:'⚡ AI コストレーダー — LLM API 料金計算機＆無料枠ディレクトリ (2026)', sub:'Gemini、OpenAI、Claude、DeepSeek、Groq、ローカルOllamaモデルの月額APIコストをリアルタイム比較。' },
+      es: { h1:'⚡ AI Cost Radar — Calculadora de Precios API LLM y Directorio Gratuito (2026)', sub:'Compara costos mensuales de Gemini, OpenAI, Claude, DeepSeek, Groq y Ollama en tiempo real.' }
+    },
+    'token-counter.html': {
+      ko: { h1:'🔢 LLM 토큰 카운터 & 프롬프트 비용 실시간 계산기', sub:'프롬프트나 코드를 붙여넣으면 글자수, 단어수, 예상 토큰 수와 주요 AI 모델별 호출 비용을 즉시 계산합니다.' },
+      ja: { h1:'🔢 LLM トークンカウンター＆プロンプト費用計算機', sub:'テキストを貼り付けるだけで文字数・推定トークン数・各AIモデルのAPI費用を即時計算します。' },
+      es: { h1:'🔢 Contador de Tokens LLM y Estimador de Costos en Tiempo Real', sub:'Pega cualquier prompt o código para calcular tokens estimados y el costo exacto en Gemini, GPT-4o y Claude.' }
+    },
+    'smartmargin.html': {
+      ko: { h1:'📊 SmartMargin Pro — 멀티마켓 매출·수수료·부가세·적자 SKU 분석기', sub:'스마트스토어·쿠팡·쇼피파이·아마존 CSV 정산 파일을 100% 오프라인 브라우저에서 1초 만에 마진·부가세·ROAS 분석합니다.' },
+      ja: { h1:'📊 SmartMargin Pro — マルチチャネル売上・手数料・純利益アナライザー', sub:'Shopify・Amazon・楽天・EtsyのCSV決済データを100%オフラインで瞬時に利益率・税金分析します。' },
+      es: { h1:'📊 SmartMargin Pro — Analizador de Margen Neto, Comisiones e Impuestos', sub:'Analiza archivos CSV de Shopify, Amazon y Etsy 100% sin conexión con alertas de SKU en pérdida.' }
+    },
+    'json-tools.html': {
+      ko: { h1:'🧩 JSON 포매터 · 유효성 검사기 · TypeScript / Python 스키마 생성기', sub:'JSON을 깔끔하게 정렬·압축·검증하고 TypeScript 인터페이스와 Python 데이터클래스를 즉시 자동 생성합니다.' },
+      ja: { h1:'🧩 JSON 整形・検証 ＆ TypeScript / Python スキーマ生成ツール', sub:'JSONの整形・圧縮・構文チェックに加え、TypeScript型やPython dataclassをワンクリック生成します。' },
+      es: { h1:'🧩 Formateador JSON, Validador y Generador de Esquemas TS / Python', sub:'Formatea, valida y minifica JSON y genera interfaces TypeScript o dataclasses de Python localmente.' }
+    },
+    'regex-tester.html': {
+      ko: { h1:'🔍 실시간 정규식(Regex) 테스터 · 하이라이터 & 치트시트', sub:'정규표현식 매칭 결과를 실시간 하이라이트로 확인하고 이메일·URL·휴대폰·날짜 프리셋을 원클릭 적용하세요.' },
+      ja: { h1:'🔍 リアルタイム正規表現(Regex)テスター＆チートシート', sub:'正規表現の一致箇所をリアルタイムでハイライト確認。メール・URL・日付のプリセット付き。' },
+      es: { h1:'🔍 Probador de Expresiones Regulares (Regex) en Tiempo Real', sub:'Prueba patrones regex con resaltado instantáneo y plantillas listas para emails, URLs y fechas.' }
+    },
+    'word-counter.html': {
+      ko: { h1:'📝 글자수·단어수·읽기 시간 & SEO 키워드 밀도 분석기', sub:'블로그 글, 유튜브 대본, SEO 페이지의 글자수, 문장 수, 예상 읽기 시간과 핵심 키워드 밀도를 분석합니다.' },
+      ja: { h1:'📝 文字数・読了時間・SEOキーワード密度アナライザー', sub:'記事の文字数・単語数・推定読了時間・主要キーワードの出現率をブラウザ内で即時分析します。' },
+      es: { h1:'📝 Contador de Palabras, Tiempo de Lectura y Densidad SEO', sub:'Analiza longitud de texto, oraciones, tiempo estimado de lectura y densidad de palabras clave.' }
+    },
+    'freelance-calc.html': {
+      ko: { h1:'💼 프리랜서 목표 시급 · 일당 · 세후 실수령액 계산기', sub:'세금, 사업 경비, 비청구 업무 시간을 반영해 목표 순수입을 달성하기 위한 정확한 시급과 월 매출을 산출합니다.' },
+      ja: { h1:'💼 フリーランス適正時給・日当・手取り収入シミュレーター', sub:'税金・経費・非稼働時間を考慮し、目標純利益に必要な時給・日額単価を算出します。' },
+      es: { h1:'💼 Calculadora de Tarifa por Hora e Impuestos para Freelancers', sub:'Calcula tu tarifa por hora y diaria mínima considerando impuestos, gastos y horas no facturables.' }
+    },
+    'image-compress.html': {
+      ko: { h1:'🖼️ 100% 오프라인 이미지 용량 압축 & WebP / JPEG 변환기', sub:'서버 업로드 없이 브라우저 HTML5 Canvas에서 PNG·JPG 이미지를 최대 80%까지 빠르게 압축·변환합니다.' },
+      ja: { h1:'🖼️ 100%オフライン画像圧縮＆WebP / JPEG変換ツール', sub:'サーバー送信なしでPNG/JPG画像をブラウザ内で安全・高速にWebP/JPEGへ圧縮変換します。' },
+      es: { h1:'🖼️ Compresor de Imágenes Sin Conexión y Conversor WebP / JPEG', sub:'Reduce el peso de tus imágenes PNG y JPG hasta un 80% directamente en tu navegador sin subir archivos.' }
+    },
+    'password-gen.html': {
+      ko: { h1:'🔐 암호학적 비밀번호 · API 키 & 시크릿 토큰 생성기', sub:'브라우저 내장 Web Crypto API로 높은 엔트로피의 강력한 비밀번호, HEX 키, URL 안전 토큰을 오프라인 생성합니다.' },
+      ja: { h1:'🔐 暗号学的パスワード・APIキー＆シークレット生成ツール', sub:'Web Crypto APIを用いて高エントロピーなパスワードやHEXシークレットをローカルで安全に生成。' },
+      es: { h1:'🔐 Generador Criptográfico de Contraseñas y Claves API', sub:'Genera contraseñas seguras, tokens HEX y claves API usando Web Crypto API de forma local.' }
+    },
+    'guide-ai-cost-optimization.html': {
+      ko: { h1:'📚 2026 개발자를 위한 AI API 비용 80% 절감 실전 아키텍처 가이드', sub:'Gemini, OpenAI, Claude, Ollama를 조합한 4단계 모델 라우팅, SQLite 응답 캐싱, 예산 서킷 브레이커 전략.' },
+      ja: { h1:'📚 2026年版 AI APIコストを80%削減する実践アーキテクチャガイド', sub:'モデルルーティング・応答キャッシュ・ローカルLLM活用による実践的なコスト最適化手法。' },
+      es: { h1:'📚 Guía 2026 para Reducir un 80% los Costos de API de IA', sub:'Patrones prácticos de enrutamiento de modelos, caché SQLite y límites de presupuesto en producción.' }
+    }
+  };
+  const origH1 = document.querySelector('main h1') ? document.querySelector('main h1').textContent : '';
+  const origSub = document.querySelector('main .sub') ? document.querySelector('main .sub').textContent : '';
+  const curSlug = (location.pathname.split('/').pop() || 'index.html');
+
   const sel = document.getElementById('siteLang');
   function applySiteLang(l) {
     const dict = NAV_I18N[l] || NAV_I18N.en;
@@ -202,6 +258,12 @@ render();
       if (dict[s]) a.textContent = dict[s];
     });
     const f = document.getElementById('footerTagline'); if (f) f.textContent = '© 2026 AI Cost Radar — ' + dict.foot;
+    const h1 = document.querySelector('main h1');
+    const sub = document.querySelector('main .sub');
+    const pDict = PAGE_I18N[curSlug] && PAGE_I18N[curSlug][l];
+    if (h1) h1.textContent = pDict ? pDict.h1 : origH1;
+    if (sub) sub.textContent = pDict ? pDict.sub : origSub;
+    document.dispatchEvent(new CustomEvent('acr-lang-change', { detail: { lang: l } }));
   }
   const savedLang = localStorage.getItem('acr_lang') || (navigator.language.startsWith('ko') ? 'ko' : (navigator.language.startsWith('ja') ? 'ja' : (navigator.language.startsWith('es') ? 'es' : 'en')));
   if (sel) {
