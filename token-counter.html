@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="google-site-verification" content="EX2RyhuQ0M_ldKtR56h3KzBSMmM_PUWpEbn2fUveZO0" />
+<title>LLM Token Counter & Prompt Cost Estimator (Gemini, GPT-4o, Claude)</title>
+<meta name="description" content="Free offline LLM token counter and API cost estimator supporting English, Korean, Japanese, and code prompts." />
+<link rel="canonical" href="https://rokjin001.github.io/token-counter.html" />
+<meta property="og:title" content="LLM Token Counter & Prompt Cost Estimator (Gemini, GPT-4o, Claude)" />
+<meta property="og:description" content="Free offline LLM token counter and API cost estimator supporting English, Korean, Japanese, and code prompts." />
+<meta property="og:url" content="https://rokjin001.github.io/token-counter.html" />
+<meta property="og:type" content="website" />
+<style>
+:root { --bg:#080d1a; --card:#11182c; --card2:#17213a; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; --amber:#fbbf24; --red:#f87171; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Inter','Pretendard','Segoe UI','Malgun Gothic',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+nav { background:#0c1224; border-bottom:1px solid var(--border); padding:12px 20px; position:sticky; top:0; z-index:50; }
+.nav-in { max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.brand { font-weight:800; font-size:16px; color:#fff; text-decoration:none; }
+.nav-links { display:flex; gap:10px; flex-wrap:wrap; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; padding:5px 9px; border-radius:8px; }
+.nav-links a:hover, .nav-links a.active { background:rgba(99,102,241,0.18); color:#fff; }
+.wrap { max-width:1160px; margin:0 auto; padding:28px 20px 64px; }
+h1 { margin:0 0 8px; font-size:26px; font-weight:800; }
+.sub { color:var(--muted); margin:0 0 22px; font-size:14px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
+input, select, textarea { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:inherit; }
+textarea { width:100%; min-height:200px; font-family:Consolas,monospace; }
+.btn { display:inline-block; background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+.btn-ghost { background:var(--card2); color:var(--text); border:1px solid var(--border); }
+.btn-green { background:rgba(52,211,153,0.18); color:#a7f3d0; border:1px solid rgba(52,211,153,0.45); }
+table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
+th, td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
+th { color:var(--muted); font-size:12px; }
+.pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-free { background:rgba(52,211,153,0.16); color:var(--green); }
+.p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
+.kpi-val { font-size:24px; font-weight:800; color:var(--green); margin:4px 0; }
+.guide h2 { font-size:18px; margin-top:0; }
+.guide p, .guide li { color:#cbd5e1; font-size:14px; }
+footer { border-top:1px solid var(--border); padding:24px 20px; text-align:center; color:var(--muted); font-size:12.5px; }
+footer a { color:var(--cyan); text-decoration:none; margin:0 8px; }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2258730597118874" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="./index.html">⚡ AI Cost Radar & Free Dev Tools</a>
+    <div class="nav-links"><a href="./index.html" class="">AI API Cost</a><a href="./token-counter.html" class="active">Token Counter</a><a href="./smartmargin.html" class="">Margin Analyzer</a><a href="./json-tools.html" class="">JSON & Schema</a><a href="./regex-tester.html" class="">Regex Tester</a><a href="./word-counter.html" class="">Word & SEO</a><a href="./freelance-calc.html" class="">Freelance Rate</a><a href="./image-compress.html" class="">Image Compress</a><a href="./password-gen.html" class="">Key Generator</a><a href="./guide-ai-cost-optimization.html" class="">Cost Guide</a></div>
+  </div>
+</nav>
+<main class="wrap">
+<h1>🔢 LLM Token Counter & Real-Time Prompt Cost Estimator</h1>
+<p class="sub">Paste any prompt, document, or code snippet to count characters, words, lines, estimated tokens, and exact per-call API cost across Gemini, GPT-4o, Claude, and DeepSeek.</p>
+<section class="card">
+  <textarea id="tIn" placeholder="Paste your prompt or text here...">You are an autonomous AI business operator. Analyze unit economics, API token budgets, and profit margins cleanly.</textarea>
+  <div class="grid" style="margin-top:14px">
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Estimated Tokens</div><div class="kpi-val" id="oTok">0</div></div>
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Characters</div><div class="kpi-val" id="oChar" style="color:#38bdf8">0</div></div>
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Words</div><div class="kpi-val" id="oWord" style="color:#f1f5f9">0</div></div>
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">1,000 Calls (Gemini Flash)</div><div class="kpi-val" id="oCost">$0.00</div></div>
+  </div>
+  <div style="overflow-x:auto;margin-top:14px">
+    <table>
+      <thead><tr><th>Model</th><th>Input Cost (1 Call)</th><th>Input Cost (1,000 Calls)</th><th>Input Cost (100,000 Calls)</th></tr></thead>
+      <tbody id="tRows"></tbody>
+    </table>
+  </div>
+</section>
+<section class="card guide">
+  <h2>How LLM Tokenization Works Across Languages</h2>
+  <p>In English prose, 1 token averages roughly 4 characters or 0.75 words. However, code symbols, JSON punctuation, and CJK languages (Korean, Japanese, Chinese) often consume 1.5× to 2.5× more tokens per character.</p>
+  <p>Before deploying an autonomous agent loop or RAG pipeline, always measure your average system prompt + context window size so hidden token bloat does not multiply your monthly bill.</p>
+</section>
+<script>
+const RATE_TABLE = [
+  ['Google Gemini 2.5 Flash', 0.15],
+  ['OpenAI GPT-4o mini', 0.15],
+  ['DeepSeek-V3', 0.27],
+  ['Anthropic Claude 3.5 Haiku', 0.80],
+  ['Google Gemini 2.5 Pro', 1.25],
+  ['OpenAI GPT-4o', 2.50],
+  ['Anthropic Claude 3.7 Sonnet', 3.00],
+  ['Ollama Local LLM', 0.00],
+];
+function countTokens() {
+  const txt = document.getElementById('tIn').value || '';
+  const chars = txt.length;
+  const words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+  const cjk = (txt.match(/[\u3000-\u9fff\uac00-\ud7af]/g) || []).length;
+  const estTok = Math.max(0, Math.ceil(((chars - cjk) / 4) + (cjk * 1.4)));
+  document.getElementById('oTok').textContent = estTok.toLocaleString();
+  document.getElementById('oChar').textContent = chars.toLocaleString();
+  document.getElementById('oWord').textContent = words.toLocaleString();
+  document.getElementById('oCost').textContent = '$' + ((estTok * 1000 / 1e6) * 0.15).toFixed(4);
+  document.getElementById('tRows').innerHTML = RATE_TABLE.map(([name, rate]) => {
+    const c1 = (estTok / 1e6) * rate;
+    return `<tr><td><strong>${name}</strong></td><td>$${c1.toFixed(6)}</td><td>$${(c1*1000).toFixed(4)}</td><td style="color:#34d399;font-weight:700">$${(c1*100000).toFixed(2)}</td></tr>`;
+  }).join('');
+}
+document.getElementById('tIn').addEventListener('input', countTokens);
+countTokens();
+</script>
+</main>
+<footer>
+  <div>© 2026 AI Cost Radar Tools Hub — 100% Client-Side Free Utilities</div>
+  <div style="margin-top:8px">
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./privacy.html">Privacy Policy</a>
+    <a href="./sitemap.xml">Sitemap</a>
+  </div>
+</footer>
+</body>
+</html>

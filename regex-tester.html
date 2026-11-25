@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="google-site-verification" content="EX2RyhuQ0M_ldKtR56h3KzBSMmM_PUWpEbn2fUveZO0" />
+<title>Interactive Regex Tester & Cheat Sheet (Online, Offline-Safe)</title>
+<meta name="description" content="Test regular expressions in real time with match highlighting and common validation presets for emails, URLs, and dates." />
+<link rel="canonical" href="https://rokjin001.github.io/regex-tester.html" />
+<meta property="og:title" content="Interactive Regex Tester & Cheat Sheet (Online, Offline-Safe)" />
+<meta property="og:description" content="Test regular expressions in real time with match highlighting and common validation presets for emails, URLs, and dates." />
+<meta property="og:url" content="https://rokjin001.github.io/regex-tester.html" />
+<meta property="og:type" content="website" />
+<style>
+:root { --bg:#080d1a; --card:#11182c; --card2:#17213a; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; --amber:#fbbf24; --red:#f87171; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Inter','Pretendard','Segoe UI','Malgun Gothic',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+nav { background:#0c1224; border-bottom:1px solid var(--border); padding:12px 20px; position:sticky; top:0; z-index:50; }
+.nav-in { max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.brand { font-weight:800; font-size:16px; color:#fff; text-decoration:none; }
+.nav-links { display:flex; gap:10px; flex-wrap:wrap; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; padding:5px 9px; border-radius:8px; }
+.nav-links a:hover, .nav-links a.active { background:rgba(99,102,241,0.18); color:#fff; }
+.wrap { max-width:1160px; margin:0 auto; padding:28px 20px 64px; }
+h1 { margin:0 0 8px; font-size:26px; font-weight:800; }
+.sub { color:var(--muted); margin:0 0 22px; font-size:14px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
+input, select, textarea { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:inherit; }
+textarea { width:100%; min-height:200px; font-family:Consolas,monospace; }
+.btn { display:inline-block; background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+.btn-ghost { background:var(--card2); color:var(--text); border:1px solid var(--border); }
+.btn-green { background:rgba(52,211,153,0.18); color:#a7f3d0; border:1px solid rgba(52,211,153,0.45); }
+table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
+th, td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
+th { color:var(--muted); font-size:12px; }
+.pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-free { background:rgba(52,211,153,0.16); color:var(--green); }
+.p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
+.kpi-val { font-size:24px; font-weight:800; color:var(--green); margin:4px 0; }
+.guide h2 { font-size:18px; margin-top:0; }
+.guide p, .guide li { color:#cbd5e1; font-size:14px; }
+footer { border-top:1px solid var(--border); padding:24px 20px; text-align:center; color:var(--muted); font-size:12.5px; }
+footer a { color:var(--cyan); text-decoration:none; margin:0 8px; }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2258730597118874" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="./index.html">⚡ AI Cost Radar & Free Dev Tools</a>
+    <div class="nav-links"><a href="./index.html" class="">AI API Cost</a><a href="./token-counter.html" class="">Token Counter</a><a href="./smartmargin.html" class="">Margin Analyzer</a><a href="./json-tools.html" class="">JSON & Schema</a><a href="./regex-tester.html" class="active">Regex Tester</a><a href="./word-counter.html" class="">Word & SEO</a><a href="./freelance-calc.html" class="">Freelance Rate</a><a href="./image-compress.html" class="">Image Compress</a><a href="./password-gen.html" class="">Key Generator</a><a href="./guide-ai-cost-optimization.html" class="">Cost Guide</a></div>
+  </div>
+</nav>
+<main class="wrap">
+<h1>🔍 Interactive Regex Tester, Live Highlighter & Cheat Sheet</h1>
+<p class="sub">Test JavaScript/ECMA regular expressions in real time with match highlighting, capture groups, and 1-click common validation presets.</p>
+<section class="card">
+  <div class="grid">
+    <label>Regular Expression Pattern<input id="rPat" value="([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})" /></label>
+    <label>Flags (e.g. g, gi, gm)<input id="rFlg" value="g" /></label>
+    <label>Quick Presets
+      <select id="rPre">
+        <option value="">-- Choose Preset --</option>
+        <option value="([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})">Email Address</option>
+        <option value="https?:\/\/[\w\-._~:/?#[\]@!$&'()*+,;=%]+">HTTP / HTTPS URL</option>
+        <option value="01[016789]-?\d{3,4}-?\d{4}">Korean Mobile Phone</option>
+        <option value="\d{4}-\d{2}-\d{2}">ISO Date (YYYY-MM-DD)</option>
+      </select>
+    </label>
+  </div>
+  <label style="margin-top:12px">Test String<textarea id="rTxt" style="min-height:130px">Contact sales@example.com or support@rokjin001.github.io before 2026-11-30. Phone: 010-1234-5678.</textarea></label>
+  <div id="rStat" class="sub" style="margin:10px 0"></div>
+  <div id="rOut" class="card" style="background:#0b1122;white-space:pre-wrap;font-family:Consolas,monospace;font-size:13.5px"></div>
+</section>
+<section class="card guide">
+  <h2>Essential Regex Quick Reference</h2>
+  <ul>
+    <li><code>\d</code> matches any digit (0–9), <code>\w</code> matches word characters, <code>\s</code> matches whitespace.</li>
+    <li><code>+</code> means 1 or more, <code>*</code> means 0 or more, <code>?</code> means optional (0 or 1).</li>
+    <li><code>(...)</code> creates a capture group; <code>^</code> and <code>$</code> anchor start and end of line.</li>
+  </ul>
+</section>
+<script>
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function runRx() {
+  const pat = document.getElementById('rPat').value;
+  const flg = document.getElementById('rFlg').value || 'g';
+  const txt = document.getElementById('rTxt').value;
+  try {
+    const re = new RegExp(pat, flg.includes('g') ? flg : flg + 'g');
+    const matches = [...txt.matchAll(re)];
+    document.getElementById('rStat').textContent = `Found ${matches.length} match(es).`;
+    let out = '', last = 0;
+    for (const m of matches) {
+      out += esc(txt.slice(last, m.index));
+      out += `<mark style="background:#34d399;color:#080d1a;padding:1px 3px;border-radius:4px">${esc(m[0])}</mark>`;
+      last = m.index + m[0].length;
+      if (m[0].length === 0) break;
+    }
+    out += esc(txt.slice(last));
+    document.getElementById('rOut').innerHTML = out;
+  } catch (e) {
+    document.getElementById('rStat').textContent = 'Regex Error: ' + e.message;
+  }
+}
+document.getElementById('rPre').onchange = (e) => { if (e.target.value) { document.getElementById('rPat').value = e.target.value; runRx(); } };
+['rPat','rFlg','rTxt'].forEach(id => document.getElementById(id).addEventListener('input', runRx));
+runRx();
+</script>
+</main>
+<footer>
+  <div>© 2026 AI Cost Radar Tools Hub — 100% Client-Side Free Utilities</div>
+  <div style="margin-top:8px">
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./privacy.html">Privacy Policy</a>
+    <a href="./sitemap.xml">Sitemap</a>
+  </div>
+</footer>
+</body>
+</html>

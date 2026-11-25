@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="google-site-verification" content="EX2RyhuQ0M_ldKtR56h3KzBSMmM_PUWpEbn2fUveZO0" />
+<title>Word Counter, Reading Time & SEO Keyword Density Analyzer</title>
+<meta name="description" content="Free online word counter, character counter, reading time estimator, and SEO keyword density checker." />
+<link rel="canonical" href="https://rokjin001.github.io/word-counter.html" />
+<meta property="og:title" content="Word Counter, Reading Time & SEO Keyword Density Analyzer" />
+<meta property="og:description" content="Free online word counter, character counter, reading time estimator, and SEO keyword density checker." />
+<meta property="og:url" content="https://rokjin001.github.io/word-counter.html" />
+<meta property="og:type" content="website" />
+<style>
+:root { --bg:#080d1a; --card:#11182c; --card2:#17213a; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; --amber:#fbbf24; --red:#f87171; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Inter','Pretendard','Segoe UI','Malgun Gothic',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+nav { background:#0c1224; border-bottom:1px solid var(--border); padding:12px 20px; position:sticky; top:0; z-index:50; }
+.nav-in { max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.brand { font-weight:800; font-size:16px; color:#fff; text-decoration:none; }
+.nav-links { display:flex; gap:10px; flex-wrap:wrap; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; padding:5px 9px; border-radius:8px; }
+.nav-links a:hover, .nav-links a.active { background:rgba(99,102,241,0.18); color:#fff; }
+.wrap { max-width:1160px; margin:0 auto; padding:28px 20px 64px; }
+h1 { margin:0 0 8px; font-size:26px; font-weight:800; }
+.sub { color:var(--muted); margin:0 0 22px; font-size:14px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
+input, select, textarea { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:inherit; }
+textarea { width:100%; min-height:200px; font-family:Consolas,monospace; }
+.btn { display:inline-block; background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+.btn-ghost { background:var(--card2); color:var(--text); border:1px solid var(--border); }
+.btn-green { background:rgba(52,211,153,0.18); color:#a7f3d0; border:1px solid rgba(52,211,153,0.45); }
+table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
+th, td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
+th { color:var(--muted); font-size:12px; }
+.pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-free { background:rgba(52,211,153,0.16); color:var(--green); }
+.p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
+.kpi-val { font-size:24px; font-weight:800; color:var(--green); margin:4px 0; }
+.guide h2 { font-size:18px; margin-top:0; }
+.guide p, .guide li { color:#cbd5e1; font-size:14px; }
+footer { border-top:1px solid var(--border); padding:24px 20px; text-align:center; color:var(--muted); font-size:12.5px; }
+footer a { color:var(--cyan); text-decoration:none; margin:0 8px; }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2258730597118874" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="./index.html">⚡ AI Cost Radar & Free Dev Tools</a>
+    <div class="nav-links"><a href="./index.html" class="">AI API Cost</a><a href="./token-counter.html" class="">Token Counter</a><a href="./smartmargin.html" class="">Margin Analyzer</a><a href="./json-tools.html" class="">JSON & Schema</a><a href="./regex-tester.html" class="">Regex Tester</a><a href="./word-counter.html" class="active">Word & SEO</a><a href="./freelance-calc.html" class="">Freelance Rate</a><a href="./image-compress.html" class="">Image Compress</a><a href="./password-gen.html" class="">Key Generator</a><a href="./guide-ai-cost-optimization.html" class="">Cost Guide</a></div>
+  </div>
+</nav>
+<main class="wrap">
+<h1>📝 Word Counter, Reading Time & SEO Keyword Density Analyzer</h1>
+<p class="sub">Analyze article length, estimated reading time, sentence count, and top keyword density for blog posts, YouTube scripts, and SEO landing pages.</p>
+<section class="card">
+  <textarea id="wIn" placeholder="Paste your article or blog draft here...">Building a zero-capital micro-SaaS or free developer utility portal requires smart SEO, clean UX, fast loading pages, and helpful original content. Tools that solve real daily problems earn organic search traffic and sustainable ad revenue over time.</textarea>
+  <div class="grid" style="margin-top:14px">
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Words</div><div class="kpi-val" id="wWords">0</div></div>
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Characters (w/ spaces)</div><div class="kpi-val" id="wChars" style="color:#38bdf8">0</div></div>
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Sentences</div><div class="kpi-val" id="wSent" style="color:#f1f5f9">0</div></div>
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Est. Reading Time</div><div class="kpi-val" id="wRead" style="color:#fbbf24">0 min</div></div>
+  </div>
+  <h3 style="margin-top:18px;font-size:15px">Top Keywords & Density</h3>
+  <table><thead><tr><th>Keyword</th><th>Count</th><th>Density (%)</th></tr></thead><tbody id="wKw"></tbody></table>
+</section>
+<section class="card guide">
+  <h2>Ideal Content Length & Keyword Density for Google SEO</h2>
+  <p>Helpful informational guides generally perform best between 800 and 1,800 words with clear headings and concise paragraphs. Keep primary keyword density natural (around 1%–2.5%) to avoid keyword stuffing penalties.</p>
+</section>
+<script>
+const STOP = new Set(['the','and','for','that','with','this','from','are','was','were','your','you','into','have','has','can','will','about','over','more','than']);
+function analyzeText() {
+  const txt = document.getElementById('wIn').value || '';
+  const words = txt.trim() ? txt.trim().split(/\s+/) : [];
+  const sents = txt.trim() ? txt.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
+  document.getElementById('wWords').textContent = words.length.toLocaleString();
+  document.getElementById('wChars').textContent = txt.length.toLocaleString();
+  document.getElementById('wSent').textContent = sents.toLocaleString();
+  document.getElementById('wRead').textContent = Math.max(1, Math.ceil(words.length / 220)) + ' min';
+  const freq = {};
+  words.forEach(w => {
+    const clean = w.toLowerCase().replace(/[^a-z0-9가-힣-]/g, '');
+    if (clean.length >= 3 && !STOP.has(clean)) freq[clean] = (freq[clean] || 0) + 1;
+  });
+  const top = Object.entries(freq).sort((a,b) => b[1]-a[1]).slice(0, 8);
+  document.getElementById('wKw').innerHTML = top.map(([k,c]) => `<tr><td><strong>${k}</strong></td><td>${c}</td><td>${words.length ? (c/words.length*100).toFixed(2) : '0.00'}%</td></tr>`).join('') || '<tr><td colspan="3">Type text above to inspect keywords.</td></tr>';
+}
+document.getElementById('wIn').addEventListener('input', analyzeText);
+analyzeText();
+</script>
+</main>
+<footer>
+  <div>© 2026 AI Cost Radar Tools Hub — 100% Client-Side Free Utilities</div>
+  <div style="margin-top:8px">
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./privacy.html">Privacy Policy</a>
+    <a href="./sitemap.xml">Sitemap</a>
+  </div>
+</footer>
+</body>
+</html>
