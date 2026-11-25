@@ -12,45 +12,102 @@
 <meta property="og:url" content="https://rokjin001.github.io/token-counter.html" />
 <meta property="og:type" content="website" />
 <style>
-:root { --bg:#080d1a; --card:#11182c; --card2:#17213a; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; --amber:#fbbf24; --red:#f87171; }
+:root {
+  --bg:#070b16; --bg-glow:radial-gradient(ellipse 80% 50% at 50% -15%, rgba(99,102,241,0.22), transparent);
+  --nav-bg:rgba(10,15,30,0.84); --card:#10182b; --card2:#162038; --input-bg:#0a1020;
+  --border:#233254; --text:#f1f5f9; --text-soft:#cbd5e1; --muted:#94a3b8;
+  --accent:#6366f1; --accent2:#818cf8; --green:#10b981; --cyan:#0ea5e9; --amber:#f59e0b; --red:#ef4444;
+  --shadow:0 12px 34px rgba(0,0,0,0.28);
+}
+[data-theme="light"] {
+  --bg:#f8fafc; --bg-glow:radial-gradient(ellipse 80% 45% at 50% -12%, rgba(99,102,241,0.14), transparent);
+  --nav-bg:rgba(255,255,255,0.88); --card:#ffffff; --card2:#f1f5f9; --input-bg:#f8fafc;
+  --border:#e2e8f0; --text:#0f172a; --text-soft:#334155; --muted:#64748b;
+  --accent:#4f46e5; --accent2:#6366f1; --green:#059669; --cyan:#0284c7; --amber:#d97706; --red:#dc2626;
+  --shadow:0 10px 30px rgba(15,23,42,0.06);
+}
 * { box-sizing:border-box; }
-body { margin:0; font-family:'Inter','Pretendard','Segoe UI','Malgun Gothic',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
-nav { background:#0c1224; border-bottom:1px solid var(--border); padding:12px 20px; position:sticky; top:0; z-index:50; }
-.nav-in { max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
-.brand { font-weight:800; font-size:16px; color:#fff; text-decoration:none; }
-.nav-links { display:flex; gap:10px; flex-wrap:wrap; }
-.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; padding:5px 9px; border-radius:8px; }
-.nav-links a:hover, .nav-links a.active { background:rgba(99,102,241,0.18); color:#fff; }
-.wrap { max-width:1160px; margin:0 auto; padding:28px 20px 64px; }
-h1 { margin:0 0 8px; font-size:26px; font-weight:800; }
-.sub { color:var(--muted); margin:0 0 22px; font-size:14px; }
-.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
-label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
-input, select, textarea { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:inherit; }
+body {
+  margin:0; font-family:'Inter','Pretendard','Segoe UI','Malgun Gothic','Hiragino Sans',sans-serif;
+  background:var(--bg); background-image:var(--bg-glow); background-repeat:no-repeat;
+  color:var(--text); line-height:1.65; transition:background .2s ease, color .2s ease;
+}
+nav {
+  background:var(--nav-bg); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border); padding:12px 20px; position:sticky; top:0; z-index:60;
+}
+.nav-in { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.brand { display:flex; align-items:center; gap:9px; font-weight:800; font-size:16px; color:var(--text); text-decoration:none; letter-spacing:-0.3px; }
+.brand-dot { width:28px; height:28px; border-radius:8px; background:linear-gradient(135deg,var(--accent),var(--cyan)); display:inline-flex; align-items:center; justify-content:center; color:#fff; font-size:14px; box-shadow:0 4px 12px rgba(99,102,241,0.35); }
+.nav-links { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:12.5px; font-weight:600; padding:6px 10px; border-radius:8px; transition:all .15s; }
+.nav-links a:hover, .nav-links a.active { background:rgba(99,102,241,0.14); color:var(--accent2); }
+[data-theme="light"] .nav-links a:hover, [data-theme="light"] .nav-links a.active { color:var(--accent); }
+.nav-controls { display:flex; gap:7px; align-items:center; }
+.ctrl-btn, .ctrl-sel {
+  background:var(--card2); color:var(--text); border:1px solid var(--border);
+  border-radius:8px; padding:6px 10px; font-size:12px; font-weight:600; cursor:pointer;
+}
+.ctrl-btn:hover, .ctrl-sel:hover { border-color:var(--accent); }
+
+.wrap { max-width:1180px; margin:0 auto; padding:34px 20px 72px; }
+h1 { margin:0 0 10px; font-size:30px; font-weight:800; letter-spacing:-0.6px; line-height:1.25; }
+.sub { color:var(--muted); margin:0 0 24px; font-size:14.5px; max-width:820px; }
+.card {
+  background:var(--card); border:1px solid var(--border); border-radius:18px;
+  padding:24px; margin-bottom:22px; box-shadow:var(--shadow); transition:transform .18s ease, border-color .18s ease;
+}
+.card:hover { border-color:rgba(99,102,241,0.42); }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:15px; }
+label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; font-weight:600; color:var(--muted); }
+input, select, textarea {
+  background:var(--input-bg); color:var(--text); border:1px solid var(--border);
+  border-radius:10px; padding:10px 12px; font-size:13.5px; font-family:inherit; outline:none; transition:border-color .15s;
+}
+input:focus, select:focus, textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(99,102,241,0.15); }
 textarea { width:100%; min-height:200px; font-family:Consolas,monospace; }
-.btn { display:inline-block; background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+.btn {
+  display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13px;
+  cursor:pointer; text-decoration:none; transition:transform .15s, opacity .15s;
+}
+.btn:hover { transform:translateY(-1px); opacity:0.95; }
 .btn-ghost { background:var(--card2); color:var(--text); border:1px solid var(--border); }
-.btn-green { background:rgba(52,211,153,0.18); color:#a7f3d0; border:1px solid rgba(52,211,153,0.45); }
-table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
-th, td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
-th { color:var(--muted); font-size:12px; }
-.pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
-.p-free { background:rgba(52,211,153,0.16); color:var(--green); }
-.p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
-.kpi-val { font-size:24px; font-weight:800; color:var(--green); margin:4px 0; }
-.guide h2 { font-size:18px; margin-top:0; }
-.guide p, .guide li { color:#cbd5e1; font-size:14px; }
-footer { border-top:1px solid var(--border); padding:24px 20px; text-align:center; color:var(--muted); font-size:12.5px; }
-footer a { color:var(--cyan); text-decoration:none; margin:0 8px; }
+.btn-green { background:rgba(16,185,129,0.16); color:var(--green); border:1px solid rgba(16,185,129,0.4); }
+table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:14px; }
+th, td { padding:11px 10px; border-bottom:1px solid var(--border); text-align:left; }
+th { color:var(--muted); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.3px; }
+tr:hover td { background:rgba(99,102,241,0.04); }
+.pill { padding:3px 10px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-free { background:rgba(16,185,129,0.16); color:var(--green); }
+.p-paid { background:rgba(14,165,233,0.15); color:var(--cyan); }
+.kpi-val { font-size:26px; font-weight:800; color:var(--green); margin:4px 0; letter-spacing:-0.4px; }
+.guide h2 { font-size:19px; margin-top:0; letter-spacing:-0.3px; }
+.guide p, .guide li { color:var(--text-soft); font-size:14.2px; }
+footer { border-top:1px solid var(--border); padding:28px 20px; text-align:center; color:var(--muted); font-size:12.5px; }
+footer a { color:var(--cyan); text-decoration:none; margin:0 10px; font-weight:600; }
+footer a:hover { text-decoration:underline; }
+@media (max-width: 720px) {
+  h1 { font-size:23px; }
+  .card { padding:18px; }
+}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2258730597118874" crossorigin="anonymous"></script>
 </head>
 <body>
 <nav>
   <div class="nav-in">
-    <a class="brand" href="./index.html">⚡ AI Cost Radar & Free Dev Tools</a>
-    <div class="nav-links"><a href="./index.html" class="">AI API Cost</a><a href="./token-counter.html" class="active">Token Counter</a><a href="./smartmargin.html" class="">Margin Analyzer</a><a href="./json-tools.html" class="">JSON & Schema</a><a href="./regex-tester.html" class="">Regex Tester</a><a href="./word-counter.html" class="">Word & SEO</a><a href="./freelance-calc.html" class="">Freelance Rate</a><a href="./image-compress.html" class="">Image Compress</a><a href="./password-gen.html" class="">Key Generator</a><a href="./guide-ai-cost-optimization.html" class="">Cost Guide</a></div>
+    <a class="brand" href="./index.html"><span class="brand-dot">⚡</span><span id="brandText">AI Cost Radar</span></a>
+    <div class="nav-links"><a href="./index.html" data-slug="index.html" class="">AI API Cost</a><a href="./token-counter.html" data-slug="token-counter.html" class="active">Token Counter</a><a href="./smartmargin.html" data-slug="smartmargin.html" class="">Margin Analyzer</a><a href="./json-tools.html" data-slug="json-tools.html" class="">JSON & Schema</a><a href="./regex-tester.html" data-slug="regex-tester.html" class="">Regex Tester</a><a href="./word-counter.html" data-slug="word-counter.html" class="">Word & SEO</a><a href="./freelance-calc.html" data-slug="freelance-calc.html" class="">Freelance Rate</a><a href="./image-compress.html" data-slug="image-compress.html" class="">Image Compress</a><a href="./password-gen.html" data-slug="password-gen.html" class="">Key Generator</a><a href="./guide-ai-cost-optimization.html" data-slug="guide-ai-cost-optimization.html" class="">Cost Guide</a></div>
+    <div class="nav-controls">
+      <select id="siteLang" class="ctrl-sel" aria-label="Language">
+        <option value="en">🌐 EN</option>
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="es">🇪🇸 ES</option>
+      </select>
+      <button id="themeToggle" class="ctrl-btn" type="button">☀️ Light</button>
+    </div>
   </div>
 </nav>
 <main class="wrap">
@@ -107,7 +164,7 @@ countTokens();
 </script>
 </main>
 <footer>
-  <div>© 2026 AI Cost Radar Tools Hub — 100% Client-Side Free Utilities</div>
+  <div id="footerTagline">© 2026 AI Cost Radar — 100% Client-Side Free Utilities · Zero Server Upload</div>
   <div style="margin-top:8px">
     <a href="./index.html">Home</a>
     <a href="./about.html">About</a>
@@ -115,5 +172,50 @@ countTokens();
     <a href="./sitemap.xml">Sitemap</a>
   </div>
 </footer>
+
+<script>
+(function() {
+  const savedTheme = localStorage.getItem('acr_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  const btn = document.getElementById('themeToggle');
+  function syncThemeBtn(t) { if (btn) btn.textContent = t === 'dark' ? '☀️ Light' : '🌙 Dark'; }
+  syncThemeBtn(savedTheme);
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('acr_theme', next);
+      syncThemeBtn(next);
+    });
+  }
+
+  const NAV_I18N = {
+    en: { brand:'AI Cost Radar', 'index.html':'AI API Cost', 'token-counter.html':'Token Counter', 'smartmargin.html':'Margin Calc', 'json-tools.html':'JSON & Schema', 'regex-tester.html':'Regex Tester', 'word-counter.html':'Word & SEO', 'freelance-calc.html':'Freelance Rate', 'image-compress.html':'Image Compress', 'password-gen.html':'Key Gen', 'guide-ai-cost-optimization.html':'Cost Guide', foot:'100% Client-Side Free Utilities · Zero Server Upload' },
+    ko: { brand:'AI 코스트 레이더', 'index.html':'AI API 비용', 'token-counter.html':'토큰 계산기', 'smartmargin.html':'마진 분석기', 'json-tools.html':'JSON 스키마', 'regex-tester.html':'정규식 테스트', 'word-counter.html':'글자수·SEO', 'freelance-calc.html':'프리랜서 단가', 'image-compress.html':'이미지 압축', 'password-gen.html':'비밀번호 생성', 'guide-ai-cost-optimization.html':'비용 절감 가이드', foot:'100% 브라우저 오프라인 무료 도구 · 데이터 외부 전송 없음' },
+    ja: { brand:'AI コストレーダー', 'index.html':'AI API料金', 'token-counter.html':'トークン計算', 'smartmargin.html':'利益率分析', 'json-tools.html':'JSON整形', 'regex-tester.html':'正規表現', 'word-counter.html':'文字数・SEO', 'freelance-calc.html':'フリーランス単価', 'image-compress.html':'画像圧縮', 'password-gen.html':'パスワード生成', 'guide-ai-cost-optimization.html':'節約ガイド', foot:'100%クライアント処理・無料オンラインツール' },
+    es: { brand:'AI Cost Radar', 'index.html':'Costos API IA', 'token-counter.html':'Tokens IA', 'smartmargin.html':'Margen Neto', 'json-tools.html':'JSON & Esquema', 'regex-tester.html':'Regex', 'word-counter.html':'Palabras SEO', 'freelance-calc.html':'Tarifa Freelance', 'image-compress.html':'Comprimir Img', 'password-gen.html':'Claves Seguras', 'guide-ai-cost-optimization.html':'Guía Ahorro', foot:'Herramientas Gratuitas 100% Locales · Privacidad Total' }
+  };
+  const sel = document.getElementById('siteLang');
+  function applySiteLang(l) {
+    const dict = NAV_I18N[l] || NAV_I18N.en;
+    const b = document.getElementById('brandText'); if (b) b.textContent = dict.brand;
+    document.querySelectorAll('.nav-links a[data-slug]').forEach(a => {
+      const s = a.getAttribute('data-slug');
+      if (dict[s]) a.textContent = dict[s];
+    });
+    const f = document.getElementById('footerTagline'); if (f) f.textContent = '© 2026 AI Cost Radar — ' + dict.foot;
+  }
+  const savedLang = localStorage.getItem('acr_lang') || (navigator.language.startsWith('ko') ? 'ko' : (navigator.language.startsWith('ja') ? 'ja' : (navigator.language.startsWith('es') ? 'es' : 'en')));
+  if (sel) {
+    sel.value = savedLang;
+    applySiteLang(savedLang);
+    sel.addEventListener('change', (e) => {
+      localStorage.setItem('acr_lang', e.target.value);
+      applySiteLang(e.target.value);
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
