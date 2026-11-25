@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JSON Formatter, Validator & TypeScript/Python Schema Generator</title>
+<meta name="description" content="Free offline JSON formatter, validator, minifier, and automatic TypeScript interface / Python dataclass generator." />
+<link rel="canonical" href="https://rokjin001.github.io/ai-cost-radar/json-tools.html" />
+<meta property="og:title" content="JSON Formatter, Validator & TypeScript/Python Schema Generator" />
+<meta property="og:description" content="Free offline JSON formatter, validator, minifier, and automatic TypeScript interface / Python dataclass generator." />
+<meta property="og:url" content="https://rokjin001.github.io/ai-cost-radar/json-tools.html" />
+<meta property="og:type" content="website" />
+<style>
+:root { --bg:#080d1a; --card:#11182c; --card2:#17213a; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; --amber:#fbbf24; --red:#f87171; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Inter','Pretendard','Segoe UI','Malgun Gothic',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+nav { background:#0c1224; border-bottom:1px solid var(--border); padding:12px 20px; position:sticky; top:0; z-index:50; }
+.nav-in { max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.brand { font-weight:800; font-size:16px; color:#fff; text-decoration:none; }
+.nav-links { display:flex; gap:10px; flex-wrap:wrap; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; padding:5px 9px; border-radius:8px; }
+.nav-links a:hover, .nav-links a.active { background:rgba(99,102,241,0.18); color:#fff; }
+.wrap { max-width:1160px; margin:0 auto; padding:28px 20px 64px; }
+h1 { margin:0 0 8px; font-size:26px; font-weight:800; }
+.sub { color:var(--muted); margin:0 0 22px; font-size:14px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
+input, select, textarea { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:inherit; }
+textarea { width:100%; min-height:200px; font-family:Consolas,monospace; }
+.btn { display:inline-block; background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+.btn-ghost { background:var(--card2); color:var(--text); border:1px solid var(--border); }
+.btn-green { background:rgba(52,211,153,0.18); color:#a7f3d0; border:1px solid rgba(52,211,153,0.45); }
+table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
+th, td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
+th { color:var(--muted); font-size:12px; }
+.pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-free { background:rgba(52,211,153,0.16); color:var(--green); }
+.p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
+.kpi-val { font-size:24px; font-weight:800; color:var(--green); margin:4px 0; }
+.guide h2 { font-size:18px; margin-top:0; }
+.guide p, .guide li { color:#cbd5e1; font-size:14px; }
+footer { border-top:1px solid var(--border); padding:24px 20px; text-align:center; color:var(--muted); font-size:12.5px; }
+footer a { color:var(--cyan); text-decoration:none; margin:0 8px; }
+</style>
+<!-- Google AdSense script will be inserted here once approved -->
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="./index.html">⚡ AI Cost Radar & Free Dev Tools</a>
+    <div class="nav-links"><a href="./index.html" class="">AI API Cost</a><a href="./smartmargin.html" class="">Margin Analyzer</a><a href="./json-tools.html" class="active">JSON & Schema</a><a href="./freelance-calc.html" class="">Freelance Rate</a><a href="./image-compress.html" class="">Image Compress</a><a href="./password-gen.html" class="">Key Generator</a></div>
+  </div>
+</nav>
+<main class="wrap">
+<h1>🧩 JSON Formatter, Validator & TypeScript / Python Schema Generator</h1>
+<p class="sub">Validate, beautify, minify JSON and instantly generate clean TypeScript interfaces or Python dataclasses — 100% locally in your browser.</p>
+<section class="card">
+  <textarea id="jIn">{"project": "AI Cost Radar", "active": true, "monthly_budget_usd": 25.5, "providers": ["gemini", "openai", "ollama"]}</textarea>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
+    <button class="btn" onclick="fmtJson(2)">Beautify (2 spaces)</button>
+    <button class="btn btn-ghost" onclick="fmtJson(0)">Minify</button>
+    <button class="btn btn-green" onclick="genTS()">Generate TypeScript</button>
+    <button class="btn btn-green" onclick="genPy()">Generate Python Dataclass</button>
+  </div>
+  <div id="jErr" style="color:#f87171;font-size:13px;margin-bottom:8px"></div>
+  <textarea id="jOut" readonly placeholder="Output appears here..."></textarea>
+</section>
+<section class="card guide">
+  <h2>Why Use a Client-Side JSON Tool?</h2>
+  <p>API payloads often contain internal IDs, customer records, or staging tokens. Unlike cloud JSON formatters that transmit your payload to remote servers, this utility executes entirely inside your local browser memory.</p>
+</section>
+<script>
+function parseIn() {
+  document.getElementById('jErr').textContent = '';
+  try { return JSON.parse(document.getElementById('jIn').value); }
+  catch (e) { document.getElementById('jErr').textContent = 'Invalid JSON: ' + e.message; return null; }
+}
+function fmtJson(sp) { const o = parseIn(); if (o !== null) document.getElementById('jOut').value = JSON.stringify(o, null, sp); }
+function tsType(v) { if (v === null) return 'null'; if (Array.isArray(v)) return (v.length ? tsType(v[0]) : 'any') + '[]'; return typeof v; }
+function pyType(v) { if (v === null) return 'Any'; if (Array.isArray(v)) return 'list[' + (v.length ? pyType(v[0]) : 'Any') + ']'; if (typeof v === 'boolean') return 'bool'; if (typeof v === 'number') return Number.isInteger(v) ? 'int' : 'float'; if (typeof v === 'string') return 'str'; return 'dict[str, Any]'; }
+function genTS() {
+  const o = parseIn(); if (!o || typeof o !== 'object') return;
+  const lines = ['export interface RootObject {'];
+  Object.entries(o).forEach(([k, v]) => lines.push(`  ${k}: ${tsType(v)};`));
+  lines.push('}');
+  document.getElementById('jOut').value = lines.join('\n');
+}
+function genPy() {
+  const o = parseIn(); if (!o || typeof o !== 'object') return;
+  const lines = ['from dataclasses import dataclass', 'from typing import Any', '', '@dataclass', 'class RootObject:'];
+  Object.entries(o).forEach(([k, v]) => lines.push(`    ${k}: ${pyType(v)}`));
+  document.getElementById('jOut').value = lines.join('\n');
+}
+fmtJson(2);
+</script>
+</main>
+<footer>
+  <div>© 2026 AI Cost Radar Tools Hub — 100% Client-Side Free Utilities</div>
+  <div style="margin-top:8px">
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./privacy.html">Privacy Policy</a>
+    <a href="./sitemap.xml">Sitemap</a>
+  </div>
+</footer>
+</body>
+</html>

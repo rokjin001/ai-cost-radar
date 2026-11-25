@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free Offline Image Compressor & WebP Converter</title>
+<meta name="description" content="Compress PNG and JPEG images to WebP or JPG 100% locally in your browser with zero server uploads." />
+<link rel="canonical" href="https://rokjin001.github.io/ai-cost-radar/image-compress.html" />
+<meta property="og:title" content="Free Offline Image Compressor & WebP Converter" />
+<meta property="og:description" content="Compress PNG and JPEG images to WebP or JPG 100% locally in your browser with zero server uploads." />
+<meta property="og:url" content="https://rokjin001.github.io/ai-cost-radar/image-compress.html" />
+<meta property="og:type" content="website" />
+<style>
+:root { --bg:#080d1a; --card:#11182c; --card2:#17213a; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; --amber:#fbbf24; --red:#f87171; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Inter','Pretendard','Segoe UI','Malgun Gothic',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+nav { background:#0c1224; border-bottom:1px solid var(--border); padding:12px 20px; position:sticky; top:0; z-index:50; }
+.nav-in { max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.brand { font-weight:800; font-size:16px; color:#fff; text-decoration:none; }
+.nav-links { display:flex; gap:10px; flex-wrap:wrap; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; padding:5px 9px; border-radius:8px; }
+.nav-links a:hover, .nav-links a.active { background:rgba(99,102,241,0.18); color:#fff; }
+.wrap { max-width:1160px; margin:0 auto; padding:28px 20px 64px; }
+h1 { margin:0 0 8px; font-size:26px; font-weight:800; }
+.sub { color:var(--muted); margin:0 0 22px; font-size:14px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
+input, select, textarea { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:inherit; }
+textarea { width:100%; min-height:200px; font-family:Consolas,monospace; }
+.btn { display:inline-block; background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+.btn-ghost { background:var(--card2); color:var(--text); border:1px solid var(--border); }
+.btn-green { background:rgba(52,211,153,0.18); color:#a7f3d0; border:1px solid rgba(52,211,153,0.45); }
+table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
+th, td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
+th { color:var(--muted); font-size:12px; }
+.pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-free { background:rgba(52,211,153,0.16); color:var(--green); }
+.p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
+.kpi-val { font-size:24px; font-weight:800; color:var(--green); margin:4px 0; }
+.guide h2 { font-size:18px; margin-top:0; }
+.guide p, .guide li { color:#cbd5e1; font-size:14px; }
+footer { border-top:1px solid var(--border); padding:24px 20px; text-align:center; color:var(--muted); font-size:12.5px; }
+footer a { color:var(--cyan); text-decoration:none; margin:0 8px; }
+</style>
+<!-- Google AdSense script will be inserted here once approved -->
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="./index.html">⚡ AI Cost Radar & Free Dev Tools</a>
+    <div class="nav-links"><a href="./index.html" class="">AI API Cost</a><a href="./smartmargin.html" class="">Margin Analyzer</a><a href="./json-tools.html" class="">JSON & Schema</a><a href="./freelance-calc.html" class="">Freelance Rate</a><a href="./image-compress.html" class="active">Image Compress</a><a href="./password-gen.html" class="">Key Generator</a></div>
+  </div>
+</nav>
+<main class="wrap">
+<h1>🖼️ Offline Image Compressor & WebP / JPEG Converter</h1>
+<p class="sub">Shrink PNG/JPG file sizes by up to 80% for faster websites and Core Web Vitals — processed 100% locally via HTML5 Canvas (zero uploads).</p>
+<section class="card">
+  <div class="grid">
+    <label>Select Image (PNG / JPG / WebP)<input id="imgFile" type="file" accept="image/*" /></label>
+    <label>Output Format<select id="imgFmt"><option value="image/webp">WebP (Smallest)</option><option value="image/jpeg">JPEG (Universal)</option></select></label>
+    <label>Quality (10% - 100%)<input id="imgQual" type="range" min="10" max="100" value="80" /></label>
+  </div>
+  <div id="imgInfo" class="sub" style="margin-top:14px">Choose an image file to compress instantly.</div>
+  <a id="imgDl" class="btn btn-green" style="display:none" download="compressed.webp">⬇ Download Compressed Image</a>
+</section>
+<section class="card guide">
+  <h2>Why Convert Images to WebP for SEO?</h2>
+  <p>Google Core Web Vitals penalizes slow Largest Contentful Paint (LCP). Converting uncompressed PNG or DSLR JPEG assets into WebP at 75–85% quality typically cuts transfer size by 60–80% with negligible visual loss.</p>
+</section>
+<script>
+let lastFile = null;
+function compress() {
+  if (!lastFile) return;
+  const fmt = document.getElementById('imgFmt').value;
+  const q = Number(document.getElementById('imgQual').value) / 100;
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement('canvas');
+    c.width = img.width; c.height = img.height;
+    c.getContext('2d').drawImage(img, 0, 0);
+    c.toBlob((blob) => {
+      if (!blob) return;
+      const saved = ((1 - blob.size / lastFile.size) * 100).toFixed(1);
+      document.getElementById('imgInfo').textContent = `Original: ${(lastFile.size/1024).toFixed(1)} KB → Compressed: ${(blob.size/1024).toFixed(1)} KB (${saved}% smaller)`;
+      const dl = document.getElementById('imgDl');
+      dl.href = URL.createObjectURL(blob);
+      dl.download = (lastFile.name.replace(/\.[^.]+$/, '') || 'image') + (fmt === 'image/webp' ? '.webp' : '.jpg');
+      dl.style.display = 'inline-block';
+    }, fmt, q);
+  };
+  img.src = URL.createObjectURL(lastFile);
+}
+document.getElementById('imgFile').onchange = (e) => { lastFile = e.target.files[0]; compress(); };
+document.getElementById('imgFmt').onchange = compress;
+document.getElementById('imgQual').oninput = compress;
+</script>
+</main>
+<footer>
+  <div>© 2026 AI Cost Radar Tools Hub — 100% Client-Side Free Utilities</div>
+  <div style="margin-top:8px">
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./privacy.html">Privacy Policy</a>
+    <a href="./sitemap.xml">Sitemap</a>
+  </div>
+</footer>
+</body>
+</html>

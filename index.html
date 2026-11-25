@@ -3,76 +3,91 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI Cost Radar (2026) — LLM API Pricing Calculator & Free-Tier Directory</title>
-<meta name="description" content="Compare real-time Gemini, OpenAI, Claude, DeepSeek, Groq, and Local LLM API pricing per 1M tokens. Estimate monthly AI agent costs and find free-tier APIs instantly." />
+<title>AI Cost Radar (2026) — LLM API Pricing Calculator & Free Dev Tools</title>
+<meta name="description" content="Compare Gemini, OpenAI, Claude, DeepSeek, Groq and Local LLM API pricing per 1M tokens plus free offline developer tools." />
 <link rel="canonical" href="https://rokjin001.github.io/ai-cost-radar/" />
-<meta property="og:title" content="AI Cost Radar (2026) — LLM API Pricing Calculator" />
-<meta property="og:description" content="Compare monthly API bills across Gemini, OpenAI, Claude, DeepSeek, Groq & Local LLMs." />
+<meta property="og:title" content="AI Cost Radar (2026) — LLM API Pricing Calculator & Free Dev Tools" />
+<meta property="og:description" content="Compare Gemini, OpenAI, Claude, DeepSeek, Groq and Local LLM API pricing per 1M tokens plus free offline developer tools." />
 <meta property="og:url" content="https://rokjin001.github.io/ai-cost-radar/" />
 <meta property="og:type" content="website" />
 <style>
-  :root { --bg:#080d1a; --card:#11182c; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family:'Inter','Segoe UI',sans-serif; background:var(--bg); color:var(--text); line-height:1.55; }
-  .wrap { max-width:1160px; margin:0 auto; padding:32px 20px 72px; }
-  header { display:flex; justify-content:space-between; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:26px; }
-  h1 { margin:0; font-size:28px; font-weight:800; }
-  .sub { color:var(--muted); margin:6px 0 0; font-size:14px; }
-  .badge { background:rgba(52,211,153,0.16); color:var(--green); border:1px solid rgba(52,211,153,0.4); padding:5px 12px; border-radius:999px; font-size:12px; font-weight:700; }
-  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
-  .calc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
-  label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
-  input, select { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:14px; }
-  table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
-  th, td { padding:11px 10px; border-bottom:1px solid var(--border); text-align:left; }
-  th { color:var(--muted); font-size:12px; }
-  .pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
-  .p-free { background:rgba(52,211,153,0.16); color:var(--green); }
-  .p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
-  .promo { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; background:linear-gradient(135deg,#17203d,#11182c); border:1px solid var(--accent); }
-  .btn { display:inline-block; background:var(--accent); color:#fff; text-decoration:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13.5px; }
-  .cost-highlight { font-weight:800; color:var(--green); }
+:root { --bg:#080d1a; --card:#11182c; --card2:#17213a; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; --amber:#fbbf24; --red:#f87171; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Inter','Pretendard','Segoe UI','Malgun Gothic',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+nav { background:#0c1224; border-bottom:1px solid var(--border); padding:12px 20px; position:sticky; top:0; z-index:50; }
+.nav-in { max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.brand { font-weight:800; font-size:16px; color:#fff; text-decoration:none; }
+.nav-links { display:flex; gap:10px; flex-wrap:wrap; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; padding:5px 9px; border-radius:8px; }
+.nav-links a:hover, .nav-links a.active { background:rgba(99,102,241,0.18); color:#fff; }
+.wrap { max-width:1160px; margin:0 auto; padding:28px 20px 64px; }
+h1 { margin:0 0 8px; font-size:26px; font-weight:800; }
+.sub { color:var(--muted); margin:0 0 22px; font-size:14px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
+input, select, textarea { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:inherit; }
+textarea { width:100%; min-height:200px; font-family:Consolas,monospace; }
+.btn { display:inline-block; background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+.btn-ghost { background:var(--card2); color:var(--text); border:1px solid var(--border); }
+.btn-green { background:rgba(52,211,153,0.18); color:#a7f3d0; border:1px solid rgba(52,211,153,0.45); }
+table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
+th, td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
+th { color:var(--muted); font-size:12px; }
+.pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-free { background:rgba(52,211,153,0.16); color:var(--green); }
+.p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
+.kpi-val { font-size:24px; font-weight:800; color:var(--green); margin:4px 0; }
+.guide h2 { font-size:18px; margin-top:0; }
+.guide p, .guide li { color:#cbd5e1; font-size:14px; }
+footer { border-top:1px solid var(--border); padding:24px 20px; text-align:center; color:var(--muted); font-size:12.5px; }
+footer a { color:var(--cyan); text-decoration:none; margin:0 8px; }
 </style>
+<!-- Google AdSense script will be inserted here once approved -->
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div>
-      <h1>⚡ AI Cost Radar — LLM API Pricing & Free-Tier Calculator</h1>
-      <p class="sub">Compare monthly API bills across Gemini, OpenAI, Claude, DeepSeek, Groq & Local LLMs. Updated 2026-11-25.</p>
-    </div>
-    <span class="badge">Free Forever · Updated 2026-11-25</span>
-  </header>
-
-  <section class="card">
-    <h2 style="margin-top:0;font-size:17px">1. Estimate Your Monthly AI API Bill</h2>
-    <div class="calc-grid">
-      <label>Daily Requests / Agent Calls<input id="inCalls" type="number" value="250" min="1" /></label>
-      <label>Avg Input Tokens / Call<input id="inInTok" type="number" value="1500" min="1" /></label>
-      <label>Avg Output Tokens / Call<input id="inOutTok" type="number" value="600" min="1" /></label>
-      <label>Filter<select id="inFilter"><option value="all">All Models</option><option value="free">Free Tier Available Only</option></select></label>
-    </div>
-    <div style="overflow-x:auto">
-      <table>
-        <thead><tr><th>Provider</th><th>Model</th><th>Input / 1M</th><th>Output / 1M</th><th>Free Tier</th><th>Est. Monthly Cost</th><th>Best For</th><th>Link</th></tr></thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="card promo">
-    <div>
-      <strong style="font-size:16px">🚀 Running an E-Commerce Store or Solo SaaS? Track Your Real Net Margin Offline.</strong>
-      <div class="sub">Try <strong>SmartMargin Pro</strong> — 1-second CSV profit, fees, VAT & loss SKU analyzer (EN/KR/JA/ES, $12 one-time, no subscription).</div>
-    </div>
-    <a class="btn" href="./smartmargin.html">Try SmartMargin Pro Free Preview →</a>
-  </section>
-
-  <section class="card">
-    <h2 style="margin-top:0;font-size:16px">💼 Featured Tool & Sponsor Slot ($29/mo)</h2>
-    <p class="sub">Building an AI API, dev tool, or GPU cloud? Pin your product at the top of AI Cost Radar to reach indie hackers and AI engineers actively budgeting their API spend.</p>
-  </section>
-</div>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="./index.html">⚡ AI Cost Radar & Free Dev Tools</a>
+    <div class="nav-links"><a href="./index.html" class="active">AI API Cost</a><a href="./smartmargin.html" class="">Margin Analyzer</a><a href="./json-tools.html" class="">JSON & Schema</a><a href="./freelance-calc.html" class="">Freelance Rate</a><a href="./image-compress.html" class="">Image Compress</a><a href="./password-gen.html" class="">Key Generator</a></div>
+  </div>
+</nav>
+<main class="wrap">
+<h1>⚡ AI Cost Radar — LLM API Pricing Calculator & Free-Tier Directory (2026)</h1>
+<p class="sub">Compare monthly API bills across Google Gemini, OpenAI, Anthropic Claude, DeepSeek, Groq, and Local Ollama models. Updated 2026-11-25.</p>
+<section class="card">
+  <div class="grid">
+    <label>Daily Requests / Agent Calls<input id="inCalls" type="number" value="250" min="1" /></label>
+    <label>Avg Input Tokens / Call<input id="inInTok" type="number" value="1500" min="1" /></label>
+    <label>Avg Output Tokens / Call<input id="inOutTok" type="number" value="600" min="1" /></label>
+    <label>Filter<select id="inFilter"><option value="all">All Models</option><option value="free">Free Tier Available Only</option></select></label>
+  </div>
+  <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Provider</th><th>Model</th><th>Input / 1M</th><th>Output / 1M</th><th>Tier</th><th>Est. Monthly Cost</th><th>Best For</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</section>
+<section class="card guide">
+  <h2>Free Offline Tools Included in This Hub</h2>
+  <div class="grid">
+    <div class="card" style="margin:0"><strong>📊 E-Commerce Margin Analyzer</strong><p>Calculate Shopify, Amazon, SmartStore & Coupang net profit, VAT, and ROAS from CSV.</p><a class="btn" href="./smartmargin.html">Open Tool →</a></div>
+    <div class="card" style="margin:0"><strong>🧩 JSON Formatter & Schema Gen</strong><p>Format, minify, validate JSON and auto-generate TypeScript interfaces & Python dataclasses.</p><a class="btn" href="./json-tools.html">Open Tool →</a></div>
+    <div class="card" style="margin:0"><strong>💼 Freelance Rate & Tax Calc</strong><p>Compute target hourly/day rates factoring taxes, vacation days, and non-billable time.</p><a class="btn" href="./freelance-calc.html">Open Tool →</a></div>
+    <div class="card" style="margin:0"><strong>🖼️ Offline Image Compressor</strong><p>Compress PNG/JPG to WebP or JPEG directly in your browser with zero server upload.</p><a class="btn" href="./image-compress.html">Open Tool →</a></div>
+  </div>
+</section>
+<section class="card guide">
+  <h2>How to Reduce Your AI API Bill by 60–90%</h2>
+  <p>Running autonomous AI agents or SaaS backends on a single flagship model quickly drains budgets. Modern production teams use <strong>tiered model routing</strong>:</p>
+  <ul>
+    <li><strong>Deterministic code first:</strong> Handle parsing, regex, math, and CSV aggregation with standard Python/JS instead of LLM tokens.</li>
+    <li><strong>Fast low-cost models (Gemini 2.5 Flash / GPT-4o mini):</strong> Use for classification, summarization, and structured extraction ($0.15/1M input).</li>
+    <li><strong>Response caching:</strong> Cache identical system+user prompts locally so recurring jobs cost $0.</li>
+    <li><strong>Local LLMs (Ollama):</strong> Offload bulk private batch work to local GPUs for $0 API spend.</li>
+  </ul>
+</section>
 <script>
 const MODELS = [{"provider": "Google", "model": "Gemini 2.5 Flash", "input_1m": 0.15, "output_1m": 0.6, "context": "1M", "free_tier": true, "best_for": "High-volume automation & agents", "url": "https://aistudio.google.com/"}, {"provider": "Google", "model": "Gemini 2.5 Pro", "input_1m": 1.25, "output_1m": 10.0, "context": "1M", "free_tier": true, "best_for": "Complex reasoning & coding", "url": "https://aistudio.google.com/"}, {"provider": "OpenAI", "model": "GPT-4o mini", "input_1m": 0.15, "output_1m": 0.6, "context": "128K", "free_tier": false, "best_for": "Fast low-cost classification & chat", "url": "https://platform.openai.com/"}, {"provider": "OpenAI", "model": "GPT-4o", "input_1m": 2.5, "output_1m": 10.0, "context": "128K", "free_tier": false, "best_for": "Multimodal & general production", "url": "https://platform.openai.com/"}, {"provider": "Anthropic", "model": "Claude 3.5 Haiku", "input_1m": 0.8, "output_1m": 4.0, "context": "200K", "free_tier": false, "best_for": "Low-latency agent workflows", "url": "https://console.anthropic.com/"}, {"provider": "Anthropic", "model": "Claude 3.7 Sonnet", "input_1m": 3.0, "output_1m": 15.0, "context": "200K", "free_tier": false, "best_for": "Software engineering & analysis", "url": "https://console.anthropic.com/"}, {"provider": "DeepSeek", "model": "DeepSeek-V3", "input_1m": 0.27, "output_1m": 1.1, "context": "64K", "free_tier": false, "best_for": "Ultra-low-cost coding & reasoning", "url": "https://platform.deepseek.com/"}, {"provider": "Groq", "model": "Llama 3.3 70B (Groq)", "input_1m": 0.59, "output_1m": 0.79, "context": "128K", "free_tier": true, "best_for": "Ultra-fast inference & free dev tier", "url": "https://console.groq.com/"}, {"provider": "Ollama (Local)", "model": "Qwen 2.5 / Llama 3.3 Local", "input_1m": 0.0, "output_1m": 0.0, "context": "32K+", "free_tier": true, "best_for": "$0 offline privacy & zero API bill", "url": "https://ollama.com/"}];
 function render() {
@@ -80,28 +95,22 @@ function render() {
   const inTok = Math.max(1, Number(document.getElementById('inInTok').value || 1));
   const outTok = Math.max(1, Number(document.getElementById('inOutTok').value || 1));
   const flt = document.getElementById('inFilter').value;
-  const monthlyInM = (calls * 30 * inTok) / 1e6;
-  const monthlyOutM = (calls * 30 * outTok) / 1e6;
-
-  const list = MODELS
-    .filter(m => flt === 'all' || m.free_tier)
-    .map(m => ({ ...m, monthly: monthlyInM * m.input_1m + monthlyOutM * m.output_1m }))
-    .sort((a, b) => a.monthly - b.monthly);
-
-  document.getElementById('tbody').innerHTML = list.map(m => `
-    <tr>
-      <td><strong>${m.provider}</strong></td>
-      <td>${m.model}</td>
-      <td>$${m.input_1m.toFixed(2)}</td>
-      <td>$${m.output_1m.toFixed(2)}</td>
-      <td><span class="pill ${m.free_tier ? 'p-free' : 'p-paid'}">${m.free_tier ? 'FREE TIER' : 'PAID'}</span></td>
-      <td class="cost-highlight">$${m.monthly.toFixed(2)} / mo</td>
-      <td style="color:#94a3b8">${m.best_for}</td>
-      <td><a href="${m.url}" target="_blank" rel="noopener" style="color:#818cf8">Docs ↗</a></td>
-    </tr>`).join('');
+  const mIn = (calls * 30 * inTok) / 1e6, mOut = (calls * 30 * outTok) / 1e6;
+  const list = MODELS.filter(m => flt === 'all' || m.free_tier).map(m => ({...m, monthly: mIn * m.input_1m + mOut * m.output_1m})).sort((a,b)=>a.monthly-b.monthly);
+  document.getElementById('tbody').innerHTML = list.map(m => `<tr><td><strong>${m.provider}</strong></td><td>${m.model}</td><td>$${m.input_1m.toFixed(2)}</td><td>$${m.output_1m.toFixed(2)}</td><td><span class="pill ${m.free_tier?'p-free':'p-paid'}">${m.free_tier?'FREE TIER':'PAID'}</span></td><td style="font-weight:800;color:#34d399">$${m.monthly.toFixed(2)}/mo</td><td style="color:#94a3b8">${m.best_for}</td></tr>`).join('');
 }
-['inCalls','inInTok','inOutTok','inFilter'].forEach(id => document.getElementById(id).addEventListener('input', render));
+['inCalls','inInTok','inOutTok','inFilter'].forEach(id=>document.getElementById(id).addEventListener('input',render));
 render();
 </script>
+</main>
+<footer>
+  <div>© 2026 AI Cost Radar Tools Hub — 100% Client-Side Free Utilities</div>
+  <div style="margin-top:8px">
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./privacy.html">Privacy Policy</a>
+    <a href="./sitemap.xml">Sitemap</a>
+  </div>
+</footer>
 </body>
 </html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Freelancer Hourly Rate & Tax Calculator (2026)</title>
+<meta name="description" content="Free interactive calculator to determine your minimum freelance hourly rate, day rate, and monthly gross revenue target after taxes." />
+<link rel="canonical" href="https://rokjin001.github.io/ai-cost-radar/freelance-calc.html" />
+<meta property="og:title" content="Freelancer Hourly Rate & Tax Calculator (2026)" />
+<meta property="og:description" content="Free interactive calculator to determine your minimum freelance hourly rate, day rate, and monthly gross revenue target after taxes." />
+<meta property="og:url" content="https://rokjin001.github.io/ai-cost-radar/freelance-calc.html" />
+<meta property="og:type" content="website" />
+<style>
+:root { --bg:#080d1a; --card:#11182c; --card2:#17213a; --border:#243255; --text:#f1f5f9; --muted:#94a3b8; --accent:#6366f1; --green:#34d399; --cyan:#38bdf8; --amber:#fbbf24; --red:#f87171; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:'Inter','Pretendard','Segoe UI','Malgun Gothic',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+nav { background:#0c1224; border-bottom:1px solid var(--border); padding:12px 20px; position:sticky; top:0; z-index:50; }
+.nav-in { max-width:1160px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+.brand { font-weight:800; font-size:16px; color:#fff; text-decoration:none; }
+.nav-links { display:flex; gap:10px; flex-wrap:wrap; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:600; padding:5px 9px; border-radius:8px; }
+.nav-links a:hover, .nav-links a.active { background:rgba(99,102,241,0.18); color:#fff; }
+.wrap { max-width:1160px; margin:0 auto; padding:28px 20px 64px; }
+h1 { margin:0 0 8px; font-size:26px; font-weight:800; }
+.sub { color:var(--muted); margin:0 0 22px; font-size:14px; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; margin-bottom:20px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+label { display:flex; flex-direction:column; gap:6px; font-size:12.5px; color:var(--muted); }
+input, select, textarea { background:#0b1122; color:var(--text); border:1px solid var(--border); border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:inherit; }
+textarea { width:100%; min-height:200px; font-family:Consolas,monospace; }
+.btn { display:inline-block; background:var(--accent); color:#fff; border:none; padding:10px 16px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; text-decoration:none; }
+.btn-ghost { background:var(--card2); color:var(--text); border:1px solid var(--border); }
+.btn-green { background:rgba(52,211,153,0.18); color:#a7f3d0; border:1px solid rgba(52,211,153,0.45); }
+table { width:100%; border-collapse:collapse; font-size:13.5px; margin-top:12px; }
+th, td { padding:10px; border-bottom:1px solid var(--border); text-align:left; }
+th { color:var(--muted); font-size:12px; }
+.pill { padding:3px 9px; border-radius:999px; font-size:11px; font-weight:700; }
+.p-free { background:rgba(52,211,153,0.16); color:var(--green); }
+.p-paid { background:rgba(56,189,248,0.14); color:var(--cyan); }
+.kpi-val { font-size:24px; font-weight:800; color:var(--green); margin:4px 0; }
+.guide h2 { font-size:18px; margin-top:0; }
+.guide p, .guide li { color:#cbd5e1; font-size:14px; }
+footer { border-top:1px solid var(--border); padding:24px 20px; text-align:center; color:var(--muted); font-size:12.5px; }
+footer a { color:var(--cyan); text-decoration:none; margin:0 8px; }
+</style>
+<!-- Google AdSense script will be inserted here once approved -->
+</head>
+<body>
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="./index.html">⚡ AI Cost Radar & Free Dev Tools</a>
+    <div class="nav-links"><a href="./index.html" class="">AI API Cost</a><a href="./smartmargin.html" class="">Margin Analyzer</a><a href="./json-tools.html" class="">JSON & Schema</a><a href="./freelance-calc.html" class="active">Freelance Rate</a><a href="./image-compress.html" class="">Image Compress</a><a href="./password-gen.html" class="">Key Generator</a></div>
+  </div>
+</nav>
+<main class="wrap">
+<h1>💼 Freelancer Hourly Rate, Tax & Take-Home Income Calculator</h1>
+<p class="sub">Calculate the exact hourly and daily billing rate needed to hit your target net income after taxes, business expenses, and non-billable hours.</p>
+<section class="card">
+  <div class="grid">
+    <label>Target Annual Net Income ($)<input id="fNet" type="number" value="60000" min="1000" /></label>
+    <label>Annual Business Expenses ($)<input id="fExp" type="number" value="4800" min="0" /></label>
+    <label>Effective Tax Rate (%)<input id="fTax" type="number" value="25" min="0" max="60" /></label>
+    <label>Billable Hours / Week<input id="fHrs" type="number" value="25" min="1" max="80" /></label>
+    <label>Working Weeks / Year<input id="fWks" type="number" value="46" min="1" max="52" /></label>
+  </div>
+  <div class="grid" style="margin-top:18px">
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Required Gross Revenue</div><div class="kpi-val" id="oGross">$0</div></div>
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Minimum Hourly Rate</div><div class="kpi-val" id="oHr">$0/hr</div></div>
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Day Rate (8h)</div><div class="kpi-val" id="oDay">$0/day</div></div>
+    <div class="card" style="margin:0"><div class="sub" style="margin:0">Monthly Revenue Target</div><div class="kpi-val" id="oMo">$0/mo</div></div>
+  </div>
+</section>
+<section class="card guide">
+  <h2>Why Most Freelancers Underprice Their Services</h2>
+  <p>A common mistake is dividing a target salary by 2,080 hours (40h × 52 weeks). Independent contractors typically bill only 20–30 hours per week after accounting for sales, invoicing, admin, sick leave, and self-employment taxes.</p>
+</section>
+<script>
+function calcFL() {
+  const net = Number(document.getElementById('fNet').value || 0);
+  const exp = Number(document.getElementById('fExp').value || 0);
+  const tax = Math.min(0.8, Math.max(0, Number(document.getElementById('fTax').value || 0) / 100));
+  const hrs = Math.max(1, Number(document.getElementById('fHrs').value || 1));
+  const wks = Math.max(1, Number(document.getElementById('fWks').value || 1));
+  const gross = (net / (1 - tax)) + exp;
+  const totalHrs = hrs * wks;
+  const hr = gross / totalHrs;
+  document.getElementById('oGross').textContent = '$' + Math.round(gross).toLocaleString();
+  document.getElementById('oHr').textContent = '$' + hr.toFixed(2) + '/hr';
+  document.getElementById('oDay').textContent = '$' + Math.round(hr * 8).toLocaleString() + '/day';
+  document.getElementById('oMo').textContent = '$' + Math.round(gross / 12).toLocaleString() + '/mo';
+}
+['fNet','fExp','fTax','fHrs','fWks'].forEach(id=>document.getElementById(id).addEventListener('input',calcFL));
+calcFL();
+</script>
+</main>
+<footer>
+  <div>© 2026 AI Cost Radar Tools Hub — 100% Client-Side Free Utilities</div>
+  <div style="margin-top:8px">
+    <a href="./index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./privacy.html">Privacy Policy</a>
+    <a href="./sitemap.xml">Sitemap</a>
+  </div>
+</footer>
+</body>
+</html>
